@@ -37,7 +37,7 @@
                             'menu_class' => 'navbar-nav ms-auto',
                             'fallback_cb' => false,
                             'depth' => 2,
-                            'walker' => new Bootstrap_NavWalker()
+                            'walker' => new WP_Bootstrap_Navwalker()
                         ));
                         ?>
                     </div>

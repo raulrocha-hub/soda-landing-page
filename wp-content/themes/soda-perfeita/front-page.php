@@ -1,176 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <link rel="icon" href="/pod-backups/perfect-soda/build/favicon.ico">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Soda Perfeita - A Revolução das Bebidas Artesanais no Seu Negócio">
-    <link rel="apple-touch-icon" href="/pod-backups/perfect-soda/build/logo192.png">
-    <link rel="manifest" href="/pod-backups/perfect-soda/build/manifest.json">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Soda Perfeita - Bebidas Artesanais Premium</title>
-    <script defer="defer" src="/pod-backups/perfect-soda/build/static/js/main.784926f8.js"></script>
-    <link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/App.css" rel="stylesheet">
-	<link href="css/css2.css" rel="stylesheet">
-	<link href="css/index.css" rel="stylesheet">
-	<style>
-	@tailwind base;
-@tailwind components;
-@tailwind utilities;
+<?php get_header(); ?>
 
-body {
-    margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
-@layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
-    .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
-}
-
-@layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
-}
-
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
-    }
-
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
-    }
-}
-
-	</style>
-  </head>
-  <body>
-    <noscript>Você precisa habilitar JavaScript para executar este aplicativo.</noscript>
-    <div id="root">
-      <div class="App">
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" data-testid="main-navbar">
-          <div class="container">
-            <a class="navbar-brand" href="#home" data-testid="brand-logo">
-              <i class="fas fa-glass-whiskey me-2"></i>
-              <span class="brand-text">Soda Perfeita</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" data-testid="navbar-toggler">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#sobre" data-testid="nav-link-sobre">Sobre</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#como-funciona" data-testid="nav-link-como-funciona">Como Funciona</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#beneficios" data-testid="nav-link-beneficios">Benefícios</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#tiers" data-testid="nav-link-tiers">Programas</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link btn-nav-cta" href="#contato" data-testid="nav-link-contato">Fale Conosco</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <section class="hero-section" id="home" data-testid="hero-section">
+<section class="hero-section" id="home" data-testid="hero-section">
           <div class="hero-overlay"></div>
           <div class="container">
             <div class="row align-items-center min-vh-100">
@@ -202,7 +32,7 @@ code {
               </div>
               <div class="col-lg-5">
                 <div class="hero-image-container" data-testid="hero-image">
-                  <img alt="Soda Perfeita" class="img-fluid hero-product-img" src="https://images.unsplash.com/photo-1665582313032-29058cee9c94?crop=entropy&amp;cs=srgb&amp;fm=jpg&amp;ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxyZWZyZXNoaW5nJTIwYmV2ZXJhZ2V8ZW58MHx8fHwxNzYyNDYyNTMwfDA&amp;ixlib=rb-4.1.0&amp;q=85">
+                  <img alt="Soda Perfeita" class="img-fluid hero-product-img" src="<?php echo get_template_directory_uri(); ?>/imgs/soda-perfeita-hero.jpeg">
                   <div class="hero-badge" data-testid="hero-badge">
                     <i class="fas fa-check-circle"></i>
                     <span>Perfeita porque é feita por você</span>
@@ -217,7 +47,7 @@ code {
             <div class="row align-items-center">
               <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="sobre-image-wrapper" data-testid="sobre-image">
-                  <img alt="Bebidas Artesanais" class="img-fluid rounded-4 shadow-lg" src="https://images.unsplash.com/photo-1637178921831-16034c8c7705?crop=entropy&amp;cs=srgb&amp;fm=jpg&amp;ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwyfHxkcmluayUyMGJ1YmJsZXN8ZW58MHx8fHwxNzYyNDYyNTMwfDA&amp;ixlib=rb-4.1.0&amp;q=85">
+                  <img alt="Bebidas Artesanais" class="img-fluid rounded-4 shadow-lg" src="<?php echo get_template_directory_uri(); ?>/imgs/bebidas-artesanais.jpeg">
                 </div>
               </div>
               <div class="col-lg-6">
@@ -547,7 +377,7 @@ code {
               </div>
               <div class="col-lg-6">
                 <div class="beneficio-visual" data-testid="beneficio-visual">
-                  <img alt="Benefícios Soda Perfeita" class="img-fluid rounded-4 shadow-lg" src="https://images.unsplash.com/photo-1534260164206-2a3a4a72891d?crop=entropy&amp;cs=srgb&amp;fm=jpg&amp;ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxzb2RhJTIwYm90dGxlfGVufDB8fHx8MTc2MjQ2MjUzMXww&amp;ixlib=rb-4.1.0&amp;q=85">
+                  <img alt="Benefícios Soda Perfeita" class="img-fluid rounded-4 shadow-lg" src="<?php echo get_template_directory_uri(); ?>/imgs/beneficios-soda-perfeita.jpeg">
                   <div class="beneficio-highlight" data-testid="beneficio-highlight">
                     <div class="highlight-content">
                       <i class="fas fa-trophy"></i>
@@ -819,83 +649,6 @@ code {
             </div>
           </div>
         </section>
-        <footer class="footer py-5" data-testid="footer">
-          <div class="container">
-            <div class="row g-4">
-              <div class="col-lg-4">
-                <div class="footer-brand" data-testid="footer-brand">
-                  <h3 class="footer-logo">
-                    <i class="fas fa-glass-whiskey me-2"></i>Soda Perfeita
-                  </h3>
-                  <p class="footer-tagline">Perfeita porque é feita por você</p>
-                  <p class="footer-description">Uma parceria Preshh + DVG para revolucionar o mercado de bebidas artesanais no foodservice brasileiro.</p>
-                </div>
-              </div>
-              <div class="col-lg-2 col-6">
-                <h5 class="footer-title">Links Rápidos</h5>
-                <ul class="footer-links">
-                  <li>
-                    <a href="#sobre" data-testid="footer-link-sobre">Sobre</a>
-                  </li>
-                  <li>
-                    <a href="#como-funciona" data-testid="footer-link-como-funciona">Como Funciona</a>
-                  </li>
-                  <li>
-                    <a href="#beneficios" data-testid="footer-link-beneficios">Benefícios</a>
-                  </li>
-                  <li>
-                    <a href="#tiers" data-testid="footer-link-tiers">Programas</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-3 col-6">
-                <h5 class="footer-title">Recursos</h5>
-                <ul class="footer-links">
-                  <li>
-                    <a href="#" data-testid="footer-link-treinamentos">Treinamentos</a>
-                  </li>
-                  <li>
-                    <a href="#" data-testid="footer-link-materiais">Materiais</a>
-                  </li>
-                  <li>
-                    <a href="#" data-testid="footer-link-suporte">Suporte</a>
-                  </li>
-                  <li>
-                    <a href="#" data-testid="footer-link-faq">FAQ</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-3">
-                <h5 class="footer-title">Parceiros</h5>
-                <div class="footer-partners" data-testid="footer-partners">
-                  <div class="partner-logo" data-testid="partner-preshh">
-                    <i class="fas fa-handshake"></i>
-                    <span>Preshh</span>
-                  </div>
-                  <div class="partner-logo" data-testid="partner-dvg">
-                    <i class="fas fa-award"></i>
-                    <span>DaVinci / Kerry</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="footer-divider">
-            <div class="row">
-              <div class="col-md-6">
-                <p class="footer-copyright" data-testid="footer-copyright">© 2025 Soda Perfeita. Todos os direitos reservados.</p>
-              </div>
-              <div class="col-md-6 text-md-end">
-                <div class="footer-legal" data-testid="footer-legal">
-                  <a href="#" data-testid="footer-link-privacidade">Política de Privacidade</a>
-                  <span class="mx-2">|</span>
-                  <a href="#" data-testid="footer-link-termos">Termos de Uso</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+<?php get_footer(); ?>

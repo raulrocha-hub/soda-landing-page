@@ -1,6 +1,8 @@
 <?php
 // Funções principais do tema Soda Perfeita
 
+// Incluir arquivos necessários
+
 // Configurações do tema
 function soda_perfeita_setup() {
     add_theme_support('title-tag');
@@ -21,14 +23,21 @@ function soda_perfeita_setup() {
     ));
 }
 add_action('after_setup_theme', 'soda_perfeita_setup');
-
+function register_navwalker(){
+	require_once get_template_directory() . '/inc/bootstrap-navwalker.php';
+}
+add_action( 'after_setup_theme', 'register_navwalker' );
 // Enfileirar scripts e styles
 function soda_perfeita_scripts() {
-    // CSS
-    wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/assets/css/bootstrap-custom.css');
+    // CSS da pasta css/
+    wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/css/bootstrap.css');
+    wp_enqueue_style('root-css', get_template_directory_uri() . '/css/_root.css');
+    wp_enqueue_style('app-css', get_template_directory_uri() . '/css/App.css');
+    wp_enqueue_style('css2-css', get_template_directory_uri() . '/css/css2.css');
+    wp_enqueue_style('index-css', get_template_directory_uri() . '/css/index.css');
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
     wp_enqueue_style('main-style', get_stylesheet_uri());
-    
+
     // JS
     wp_enqueue_script('bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.bundle.min.js', array('jquery'), '5.3.0', true);
     wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0', true);
