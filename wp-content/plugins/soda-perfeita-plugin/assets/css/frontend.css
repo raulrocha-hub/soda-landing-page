@@ -1,0 +1,498 @@
+/* Soda Perfeita - Frontend Styles */
+.soda-perfeita-frontend {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+}
+
+/* Container Styles */
+.soda-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.soda-container-sm {
+    max-width: 800px;
+}
+
+.soda-container-xs {
+    max-width: 600px;
+}
+
+/* Card Styles */
+.soda-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.soda-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+}
+
+.soda-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+}
+
+.soda-card .card-header h2,
+.soda-card .card-header h3 {
+    margin: 0;
+    color: white;
+}
+
+.soda-card .card-body {
+    padding: 25px;
+}
+
+/* Button Styles */
+.soda-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.soda-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.soda-btn:not(:disabled):hover {
+    transform: translateY(-1px);
+}
+
+.soda-btn:not(:disabled):active {
+    transform: translateY(0);
+}
+
+.soda-btn-primary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+}
+
+.soda-btn-primary:hover:not(:disabled) {
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+.soda-btn-success {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    box-shadow: 0 2px 10px rgba(46, 204, 113, 0.3);
+}
+
+.soda-btn-success:hover:not(:disabled) {
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+.soda-btn-warning {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    box-shadow: 0 2px 10px rgba(243, 156, 18, 0.3);
+}
+
+.soda-btn-warning:hover:not(:disabled) {
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+.soda-btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
+}
+
+.soda-btn-danger:hover:not(:disabled) {
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.soda-btn-secondary {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+    box-shadow: 0 2px 10px rgba(149, 165, 166, 0.3);
+}
+
+.soda-btn-secondary:hover:not(:disabled) {
+    box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+}
+
+.soda-btn-outline {
+    background: transparent;
+    border: 2px solid #3498db;
+    color: #3498db;
+}
+
+.soda-btn-outline:hover:not(:disabled) {
+    background: #3498db;
+    color: white;
+}
+
+/* Form Styles */
+.soda-form-group {
+    margin-bottom: 25px;
+}
+
+.soda-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.soda-form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.soda-form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.soda-form-control:invalid {
+    border-color: #e74c3c;
+}
+
+.soda-form-help {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.soda-form-error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Alert Messages */
+.soda-alert {
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 4px solid;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.soda-alert-success {
+    border-left-color: #2ecc71;
+    background: linear-gradient(135deg, #f8fff8, #e8f5e8);
+    color: #155724;
+}
+
+.soda-alert-warning {
+    border-left-color: #f39c12;
+    background: linear-gradient(135deg, #fffbf0, #fff3cd);
+    color: #856404;
+}
+
+.soda-alert-error {
+    border-left-color: #e74c3c;
+    background: linear-gradient(135deg, #fdf2f2, #f8d7da);
+    color: #721c24;
+}
+
+.soda-alert-info {
+    border-left-color: #3498db;
+    background: linear-gradient(135deg, #f0f8ff, #d1ecf1);
+    color: #0c5460;
+}
+
+/* Badge Styles */
+.soda-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.soda-badge-primary {
+    background: #3498db;
+    color: white;
+}
+
+.soda-badge-success {
+    background: #2ecc71;
+    color: white;
+}
+
+.soda-badge-warning {
+    background: #f39c12;
+    color: white;
+}
+
+.soda-badge-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.soda-badge-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+/* Progress Bar */
+.soda-progress {
+    background: #ecf0f1;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.soda-progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.soda-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 20px 20px;
+    animation: soda-progress-stripes 1s linear infinite;
+}
+
+@keyframes soda-progress-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}
+
+/* Loading States */
+.soda-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.soda-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: soda-spin 1s linear infinite;
+}
+
+@keyframes soda-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Grid System */
+.soda-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.soda-col {
+    flex: 1;
+    padding: 0 10px;
+    min-width: 0;
+}
+
+.soda-col-1 { flex: 0 0 8.333333%; }
+.soda-col-2 { flex: 0 0 16.666667%; }
+.soda-col-3 { flex: 0 0 25%; }
+.soda-col-4 { flex: 0 0 33.333333%; }
+.soda-col-5 { flex: 0 0 41.666667%; }
+.soda-col-6 { flex: 0 0 50%; }
+.soda-col-7 { flex: 0 0 58.333333%; }
+.soda-col-8 { flex: 0 0 66.666667%; }
+.soda-col-9 { flex: 0 0 75%; }
+.soda-col-10 { flex: 0 0 83.333333%; }
+.soda-col-11 { flex: 0 0 91.666667%; }
+.soda-col-12 { flex: 0 0 100%; }
+
+/* Tier Badges */
+.soda-tier-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.soda-tier-1 {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+.soda-tier-2 {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.soda-tier-3 {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.soda-tier-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.soda-tier-level {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Animations */
+@keyframes soda-fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes soda-slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes soda-bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0,0,0);
+    }
+    40%, 43% {
+        transform: translate3d(0,-30px,0);
+    }
+    70% {
+        transform: translate3d(0,-15px,0);
+    }
+    90% {
+        transform: translate3d(0,-4px,0);
+    }
+}
+
+.soda-animated {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.soda-fadeIn {
+    animation-name: soda-fadeIn;
+}
+
+.soda-slideIn {
+    animation-name: soda-slideIn;
+}
+
+.soda-bounce {
+    animation-name: soda-bounce;
+    transform-origin: center bottom;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .soda-container {
+        padding: 0 15px;
+    }
+    
+    .soda-row {
+        margin: 0 -5px;
+    }
+    
+    .soda-col {
+        flex: 0 0 100%;
+        padding: 0 5px;
+        margin-bottom: 10px;
+    }
+    
+    .soda-card .card-body {
+        padding: 20px 15px;
+    }
+    
+    .soda-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .soda-btn {
+        display: none;
+    }
+    
+    .soda-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .soda-card {
+        border: 2px solid #000;
+    }
+    
+    .soda-btn {
+        border: 2px solid;
+    }
+    
+    .soda-form-control {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .soda-card,
+    .soda-btn,
+    .soda-form-control,
+    .soda-progress-bar {
+        transition: none;
+    }
+    
+    .soda-spinner,
+    .soda-progress-bar::after {
+        animation: none;
+    }
+}
