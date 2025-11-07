@@ -1,4 +1,6 @@
-<?php get_header(); ?>
+<?php 
+if (function_exists('acf_form_head')) acf_form_head();
+get_header(); ?>
 
 <section class="hero-section" id="home" data-testid="hero-section">
           <div class="hero-overlay"></div>
@@ -619,34 +621,55 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="contato-form-wrapper" data-testid="contato-form">
-                  <form class="contato-form">
-                    <div class="mb-3">
-                      <label for="nome" class="form-label">Nome Completo *</label>
-                      <input class="form-control" id="nome" required="" data-testid="form-input-nome" type="text" value="" name="nome">
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="form-label">E-mail *</label>
-                      <input class="form-control" id="email" required="" data-testid="form-input-email" type="email" value="" name="email">
-                    </div>
-                    <div class="mb-3">
-                      <label for="telefone" class="form-label">Telefone *</label>
-                      <input class="form-control" id="telefone" required="" data-testid="form-input-telefone" type="tel" value="" name="telefone">
-                    </div>
-                    <div class="mb-3">
-                      <label for="estabelecimento" class="form-label">Nome do Estabelecimento *</label>
-                      <input class="form-control" id="estabelecimento" required="" data-testid="form-input-estabelecimento" type="text" value="" name="estabelecimento">
-                    </div>
-                    <div class="mb-3">
-                      <label for="mensagem" class="form-label">Mensagem</label>
-                      <textarea class="form-control" id="mensagem" name="mensagem" rows="4" data-testid="form-input-mensagem"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100" data-testid="form-submit-button">
-                      <i class="fas fa-paper-plane me-2"></i>Enviar Mensagem </button>
-                  </form>
-                </div>
+                <h3>Fale Conosco</h3>
+                  <?php
+ if (function_exists('acf_form')):
+      acf_form([
+          'post_id'      => 'new_post',
+          'new_post'     => [
+              'post_type'   => 'lead',
+              'post_status' => 'publish'
+          ],
+          'html_submit_button' => '
+    <button type="submit" class="acf-button button button-primary button-large w-100">
+      <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+      <span>Enviar</span>
+    </button>
+  ',
+      ]);
+  else:
+      echo '<p>Ative o plugin ACF.</p>';
+  endif; ?>
+               
               </div>
             </div>
           </div>
         </section>
 <?php get_footer(); ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('acf-form');
+  if (!form) return;
+
+  // Labels
+  form.querySelectorAll('.acf-label label').forEach(function (el) {
+    el.classList.add('form-label');
+  });
+
+  // Inputs comuns
+  form.querySelectorAll('.acf-input input[type="text"], .acf-input input[type="email"], .acf-input input[type="tel"], .acf-input input[type="url"], .acf-input input[type="number"], .acf-input textarea, .acf-input select').forEach(function (el) {
+    el.classList.add('form-control');
+  });
+
+  // “mb-3” nas linhas
+  form.querySelectorAll('.acf-field').forEach(function (el) {
+    el.classList.add('mb-3');
+  });
+
+  // Botão como .btn .btn-primary .w-100
+  var submit = form.querySelector('.acf-form-submit input[type="submit"], .acf-form-submit .acf-button');
+  if (submit) {
+    submit.classList.add('btn', 'btn-primary', 'w-100');
+  }
+});
+</script>

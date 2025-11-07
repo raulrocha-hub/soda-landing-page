@@ -976,20 +976,20 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 10px 20px rgba(255, 184, 77, 0.4);
 }
 
-.contato-form-wrapper {
+.wpcf7-form, .contato-form-wrapper {
   background: #ffffff;
   border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
-.contato-form .form-label {
+.wpcf7-form, .contato-form .form-label {
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 0.5rem;
 }
 
-.contato-form .form-control {
+.wpcf7-form, .contato-form .form-control {
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   padding: 0.75rem 1rem;
@@ -997,12 +997,12 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
 }
 
-.contato-form .form-control:focus {
+ .wpcf7-form, .contato-form .form-control:focus {
   border-color: #FFB84D;
   box-shadow: 0 0 0 0.2rem rgba(255, 184, 77, 0.25);
 }
 
-.contato-form .btn-primary {
+ .wpcf7-form, .contato-form .btn-primary {
   background: linear-gradient(135deg, #FFB84D 0%, #FF8A4D 100%);
   border: none;
   color: #1a1a1a;
@@ -1012,7 +1012,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
 }
 
-.contato-form .btn-primary:hover {
+.wpcf7-form, .contato-form .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(255, 184, 77, 0.4);
 }
@@ -1155,3 +1155,118 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
   }
 }
+
+/* Escopo apenas para o form do ACF na home */
+#acf-form.acf-form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Cada campo vira um bloco com espaçamento tipo .mb-3 */
+#acf-form .acf-field {
+  margin-bottom: 1rem;
+}
+
+/* Label como .form-label */
+#acf-form .acf-field .acf-label label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+}
+
+/* Input/textarea/select como .form-control */
+#acf-form .acf-field .acf-input input[type="text"],
+#acf-form .acf-field .acf-input input[type="email"],
+#acf-form .acf-field .acf-input input[type="tel"],
+#acf-form .acf-field .acf-input input[type="url"],
+#acf-form .acf-field .acf-input input[type="number"],
+#acf-form .acf-field .acf-input textarea,
+#acf-form .acf-field .acf-input select {
+  display: block;
+  width: 100%;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* Focus style */
+#acf-form .acf-field .acf-input input:focus,
+#acf-form .acf-field .acf-input textarea:focus,
+#acf-form .acf-field .acf-input select:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .25);
+}
+
+/* Campo requerido: asterisco em vermelho estilo bootstrap */
+#acf-form .acf-required {
+  color: #dc3545;
+  margin-left: .25rem;
+}
+
+/* Mensagens de erro do ACF parecidas com invalid-feedback */
+#acf-form .acf-error-message {
+  color: #dc3545;
+  font-size: .875rem;
+  margin-top: .25rem;
+}
+
+/* Estado inválido: borda vermelha */
+#acf-form .acf-field.-error .acf-input input,
+#acf-form .acf-field.-error .acf-input textarea,
+#acf-form .acf-field.-error .acf-input select {
+  border-color: #dc3545;
+  box-shadow: none;
+}
+
+/* Botão de envio como .btn .btn-primary .w-100 */
+#acf-form .acf-form-submit input[type="submit"],
+#acf-form .acf-form-submit .acf-button {
+  display: inline-block;
+  width: 100%;
+  padding: .6rem 1rem;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: .375rem;
+  color: #fff;
+  background-color: #ff944d;
+  cursor: pointer;
+}
+#acf-form .acf-form-submit input[type="submit"]:hover,
+#acf-form .acf-form-submit .acf-button:hover {
+  background-color: #ff944d;
+}
+
+/* Esconde o spinner do ACF se quiser manter o visual limpo */
+
+/* "mb-3" no bloco de label do ACF */
+#acf-form .acf-field .acf-label {
+  display: block;
+  margin-bottom: 1rem; /* = .mb-3 do Bootstrap */
+}
+
+/* opcional: mantém o label limpo e forte */
+#acf-form .acf-field .acf-label label {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* opcional: descrição do campo com estilo do Bootstrap */
+#acf-form .acf-field .acf-label p.description {
+  margin: .25rem 0 0;
+  font-size: .875rem;
+  color: #6c757d;
+}
+.acf-label {
+  display:none!important;
+}
+.acf-input textarea{
+  height: 60px!important;
+}
+
