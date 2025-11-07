@@ -34,11 +34,30 @@ get_header(); ?>
               </div>
               <div class="col-lg-5">
                 <div class="hero-image-container" data-testid="hero-image">
-                  <img alt="Soda Perfeita" class="img-fluid hero-product-img" src="<?php echo get_template_directory_uri(); ?>/imgs/soda-perfeita-hero.jpeg">
-                  <div class="hero-badge" data-testid="hero-badge">
+                  <!--<img alt="Soda Perfeita" class="img-fluid hero-product-img" src="<?php echo get_template_directory_uri(); ?>/imgs/soda-perfeita-hero.jpeg">
+--><?php
+ if (function_exists('acf_form')):
+      acf_form([
+          'post_id'      => 'new_post',
+          'new_post'     => [
+              'post_type'   => 'lead',
+              'post_status' => 'publish'
+          ],
+          'html_submit_button' => '
+    <button type="submit" class="acf-button button button-primary button-large w-100">
+      <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+      <span>Enviar</span>
+    </button>
+  ',
+      ]);
+  else:
+      echo '<p>Ative o plugin ACF.</p>';
+  endif; ?>
+                  <br>
+                  <!--<div class="hero-badge" data-testid="hero-badge">
                     <i class="fas fa-check-circle"></i>
                     <span>Perfeita porque é feita por você</span>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>
@@ -621,7 +640,7 @@ get_header(); ?>
                 </div>
               </div>
               <div class="col-lg-6">
-                <h3>Fale Conosco</h3>
+                <h3>Cadastre-se</h3>
                   <?php
  if (function_exists('acf_form')):
       acf_form([
