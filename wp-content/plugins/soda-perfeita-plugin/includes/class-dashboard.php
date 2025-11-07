@@ -23,6 +23,10 @@ class SodaPerfeita_Dashboard {
         add_action('wp_ajax_get_dashboard_data', array($this, 'get_dashboard_data_ajax'));
         add_action('wp_ajax_get_chart_data', array($this, 'get_chart_data_ajax'));
     }
+
+    public function init() {
+        // Método mantido para compatibilidade
+    }
     
     /**
      * Renderiza o dashboard principal

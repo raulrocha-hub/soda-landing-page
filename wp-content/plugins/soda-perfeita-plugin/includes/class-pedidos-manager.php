@@ -17,19 +17,22 @@ if (!defined('ABSPATH')) {
  */
 class SodaPerfeita_Pedidos_Manager {
     
-    private $order_statuses;
-    private $price_config;
+    public $order_statuses;
+    public $price_config;
     
     public function __construct() {
         $this->setup_order_statuses();
         $this->setup_price_config();
+    }
+
+    public function init() {
         $this->register_hooks();
     }
     
     /**
      * Configura os status de pedido
      */
-    private function setup_order_statuses() {
+    public function setup_order_statuses() {
         $this->order_statuses = array(
             'solicitado' => array(
                 'name' => 'Solicitado',
@@ -79,7 +82,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Configura preços e regras comerciais
      */
-    private function setup_price_config() {
+    public function setup_price_config() {
         $this->price_config = array(
             'preco_unitario' => 45.00,
             'quantidade_minima' => 4,
@@ -95,7 +98,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Registra os hooks do WordPress
      */
-    private function register_hooks() {
+    public function register_hooks() {
         // AJAX handlers
         add_action('wp_ajax_solicitar_pedido', array($this, 'handle_solicitacao_pedido_ajax'));
         add_action('wp_ajax_aprovar_pedido', array($this, 'handle_aprovacao_pedido_ajax'));
@@ -649,7 +652,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Notifica admin Preshh sobre novo pedido
      */
-    private function notificar_admin_preshh_pedido($pedido_id) {
+    public function notificar_admin_preshh_pedido($pedido_id) {
         $admin_email = soda_perfeita_get_option('email_admin_preshh', get_option('admin_email'));
         $cliente_id = get_field('cliente_id', $pedido_id);
         $quantidade = get_field('quantidade_garrafas', $pedido_id);
@@ -671,7 +674,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Notifica distribuidor sobre pedido aprovado
      */
-    private function notificar_distribuidor_pedido($pedido_id) {
+    public function notificar_distribuidor_pedido($pedido_id) {
         $distribuidor_id = get_field('distribuidor_id', $pedido_id);
         $distribuidor_email = get_field('email', $distribuidor_id);
         
@@ -821,7 +824,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Obtém HTML dos pedidos
      */
-    private function get_pedidos_html($user_id, $user_role, $atts = array()) {
+    public function get_pedidos_html($user_id, $user_role, $atts = array()) {
         $args = array(
             'post_type' => 'sp_pedidos',
             'posts_per_page' => $atts['limit'],
@@ -877,7 +880,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Renderiza card individual do pedido
      */
-    private function render_pedido_card($pedido_id, $user_role) {
+    public function render_pedido_card($pedido_id, $user_role) {
         $status = get_field('status', $pedido_id);
         $status_config = $this->order_statuses[$status];
         $cliente_id = get_field('cliente_id', $pedido_id);
@@ -939,7 +942,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Obtém ID do cliente pelo usuário
      */
-    private function get_cliente_id_by_user($user_id) {
+    public function get_cliente_id_by_user($user_id) {
         $args = array(
             'post_type' => 'sp_clientes',
             'posts_per_page' => 1,
@@ -959,7 +962,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Obtém ID do distribuidor pelo usuário
      */
-    private function get_distribuidor_id_by_user($user_id) {
+    public function get_distribuidor_id_by_user($user_id) {
         $args = array(
             'post_type' => 'sp_distribuidores',
             'posts_per_page' => 1,
@@ -979,7 +982,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Verifica se usuário pode realizar ação
      */
-    private function user_can_perform_action($user_role, $action, $pedido_id) {
+    public function user_can_perform_action($user_role, $action, $pedido_id) {
         $action_permissions = array(
             'aprovar' => array('admin_preshh'),
             'rejeitar' => array('admin_preshh'),
@@ -995,7 +998,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Obtém label da ação
      */
-    private function get_action_label($action) {
+    public function get_action_label($action) {
         $labels = array(
             'aprovar' => 'Aprovar',
             'rejeitar' => 'Rejeitar',
@@ -1011,7 +1014,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Atualiza métricas do cliente
      */
-    private function atualizar_metricas_cliente($cliente_id) {
+    public function atualizar_metricas_cliente($cliente_id) {
         // Implementar atualização de métricas como total de pedidos, valor médio, etc.
         update_field('data_ultimo_pedido', current_time('mysql'), $cliente_id);
     }
@@ -1019,7 +1022,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Atualiza dashboard de pedidos
      */
-    private function atualizar_dashboard_pedidos() {
+    public function atualizar_dashboard_pedidos() {
         // Forçar atualização de caches do dashboard
         delete_transient('soda_perfeita_pedidos_stats');
     }
@@ -1027,7 +1030,7 @@ class SodaPerfeita_Pedidos_Manager {
     /**
      * Finaliza pedido (ações pós-entrega)
      */
-    private function finalizar_pedido($pedido_id) {
+    public function finalizar_pedido($pedido_id) {
         // Implementar ações de finalização se necessário
     }
     

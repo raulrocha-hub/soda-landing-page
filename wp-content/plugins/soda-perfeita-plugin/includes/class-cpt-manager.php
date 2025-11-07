@@ -22,13 +22,17 @@ class SodaPerfeita_CPT_Manager {
     public function __construct() {
         $this->setup_post_types();
         $this->setup_taxonomies();
-        
+
         add_action('init', array($this, 'register_custom_post_types'));
         add_action('init', array($this, 'register_taxonomies'));
         add_action('acf/init', array($this, 'register_acf_fields'));
         add_filter('manage_sp_clientes_posts_columns', array($this, 'add_clientes_columns'));
         add_action('manage_sp_clientes_posts_custom_column', array($this, 'manage_clientes_columns'), 10, 2);
         add_filter('manage_edit-sp_clientes_sortable_columns', array($this, 'clientes_sortable_columns'));
+    }
+
+    public function init() {
+        // Método mantido para compatibilidade
     }
     
     /**

@@ -20,8 +20,13 @@ class SodaPerfeita_Form_Handler {
     
     public function __construct() {
         $this->setup_forms();
+
         $this->register_hooks();
         $this->register_acf_forms();
+    }
+
+    public function init() {
+        // Método mantido para compatibilidade
     }
     
     /**

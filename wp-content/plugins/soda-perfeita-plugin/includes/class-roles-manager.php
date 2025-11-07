@@ -25,6 +25,10 @@ class SodaPerfeita_Roles_Manager {
         $this->setup_capabilities_config();
         $this->register_hooks();
     }
+
+    public function init() {
+        // Método mantido para compatibilidade
+    }
     
     /**
      * Configura os papéis do sistema

@@ -22,7 +22,12 @@ class SodaPerfeita_Automations {
     public function __construct() {
         $this->setup_triggers();
         $this->setup_actions();
+
         $this->register_hooks();
+    }
+
+    public function init() {
+        // Método mantido para compatibilidade
     }
     
     /**

@@ -58,6 +58,8 @@ class SodaPerfeita {
     public $pedidos_manager;
     public $meritocracia;
     public $dashboard;
+    public $form_handler;
+    public $automations;
 
     public static function get_instance() {
         if (null === self::$instance) {
@@ -76,19 +78,22 @@ class SodaPerfeita {
     public function init() {
         // Carregar dependências
         $this->load_dependencies();
-        
+
         // Inicializar componentes
         $this->initialize_components();
-        
+
         // Carregar assets
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-        
+
         // Registrar shortcodes
         $this->register_shortcodes();
-        
+
         // Registrar endpoints da API
         $this->register_rest_endpoints();
+
+        // Registrar funções globais
+        $this->register_global_functions();
     }
 
     public function load_dependencies() {
@@ -100,7 +105,9 @@ class SodaPerfeita {
         require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/class-dashboard.php';
         require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/class-form-handler.php';
         require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/class-automations.php';
-        
+        require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/gamipress-shim.php';
+        require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/class-meritocracia.php';
+
         // Incluir funções auxiliares
         require_once SODA_PERFEITA_PLUGIN_DIR . 'includes/helpers.php';
     }
@@ -108,18 +115,31 @@ class SodaPerfeita {
     public function initialize_components() {
         // Inicializar gerenciador de CPTs
         $this->cpt_manager = new SodaPerfeita_CPT_Manager();
-        
+        $this->cpt_manager->init();
+
         // Inicializar gerenciador de roles
         $this->roles_manager = new SodaPerfeita_Roles_Manager();
-        
+        $this->roles_manager->init();
+
         // Inicializar gerenciador de pedidos
         $this->pedidos_manager = new SodaPerfeita_Pedidos_Manager();
-        
+        $this->pedidos_manager->init();
+
         // Inicializar sistema de meritocracia
         $this->meritocracia = new SodaPerfeita_Meritocracia();
-        
+        $this->meritocracia->init();
+
         // Inicializar dashboard
         $this->dashboard = new SodaPerfeita_Dashboard();
+        $this->dashboard->init();
+
+        // Inicializar gerenciador de formulários
+        $this->form_handler = new SodaPerfeita_Form_Handler();
+        $this->form_handler->init();
+
+        // Inicializar automações
+        $this->automations = new SodaPerfeita_Automations();
+        $this->automations->init();
     }
 
     public function load_textdomain() {
@@ -217,19 +237,25 @@ class SodaPerfeita {
     }
 
     public function activate() {
+        // Carregar dependências
+        $this->load_dependencies();
+
+        // Inicializar componentes
+        $this->initialize_components();
+
         // Configurar roles e capabilities
         $this->roles_manager->setup_roles();
-        
+
         // Configurar CPTs e taxonomias
         $this->cpt_manager->register_custom_post_types();
         flush_rewrite_rules();
-        
+
         // Configurar páginas necessárias
         $this->create_necessary_pages();
-        
+
         // Configurar opções padrão
         $this->set_default_options();
-        
+
         // Registrar cron jobs para atualização de tiers
         if (!wp_next_scheduled('soda_perfeita_daily_maintenance')) {
             wp_schedule_event(time(), 'daily', 'soda_perfeita_daily_maintenance');
@@ -315,16 +341,35 @@ class SodaPerfeita {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             $timestamp = current_time('mysql');
             $log_entry = "[{$timestamp}] [{$type}] {$message}" . PHP_EOL;
-            
+
             $log_file = SODA_PERFEITA_PLUGIN_DIR . 'logs/debug.log';
-            
+
             // Criar diretório de logs se não existir
             if (!file_exists(dirname($log_file))) {
                 wp_mkdir_p(dirname($log_file));
             }
-            
+
             error_log($log_entry, 3, $log_file);
         }
+    }
+
+    public function register_global_functions() {
+        // Registrar funções globais de utilidade
+        add_action('init', function() {
+            if (!function_exists('soda_perfeita_get_client_tier')) {
+                function soda_perfeita_get_client_tier($client_id) {
+                    $meritocracia = SodaPerfeita()->meritocracia;
+                    return $meritocracia->calcular_tier_cliente($client_id);
+                }
+            }
+
+            if (!function_exists('soda_perfeita_can_make_order')) {
+                function soda_perfeita_can_make_order($client_id) {
+                    $pedidos_manager = SodaPerfeita()->pedidos_manager;
+                    return $pedidos_manager->verificar_status_cliente($client_id);
+                }
+            }
+        });
     }
 }
 
@@ -346,18 +391,9 @@ function SodaPerfeita() {
     return SodaPerfeita::get_instance();
 }
 
-// Funções globais de utilidade
-if (!function_exists('soda_perfeita_get_client_tier')) {
-    function soda_perfeita_get_client_tier($client_id) {
-        $meritocracia = SodaPerfeita()->meritocracia;
-        return $meritocracia->calcular_tier_cliente($client_id);
-    }
-}
-
-if (!function_exists('soda_perfeita_can_make_order')) {
-    function soda_perfeita_can_make_order($client_id) {
-        $pedidos_manager = SodaPerfeita()->pedidos_manager;
-        return $pedidos_manager->verificar_status_cliente($client_id);
-    }
-}
-?>
+SodaPerfeita();
+//add_action('init', 'SodaPerfeita', 9);
+register_deactivation_hook(__FILE__, function () {
+    $ts = wp_next_scheduled('soda_perfeita_atualizar_tiers_diarios');
+    if ( $ts ) wp_unschedule_event( $ts, 'soda_perfeita_atualizar_tiers_diarios' );
+});

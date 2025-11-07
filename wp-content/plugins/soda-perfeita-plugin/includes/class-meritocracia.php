@@ -22,11 +22,19 @@ class SodaPerfeita_Meritocracia {
     private $achievements_config;
     
     public function __construct() {
-        $this->setup_tiers();
-        $this->setup_points_system();
-        $this->setup_achievements();
-        $this->register_hooks();
-        $this->register_gamipress_elements();
+    $this->setup_tiers();
+    $this->setup_points_system();
+    $this->setup_achievements();
+
+    $this->register_hooks();
+
+    // Só registra elementos do GamiPress quando ele estiver pronto
+    add_action('gamipress_init', array($this, 'register_gamipress_elements'), 20);
+}
+
+
+    public function init() {
+        // Método mantido para compatibilidade
     }
     
     /**
@@ -76,7 +84,152 @@ class SodaPerfeita_Meritocracia {
             )
         );
     }
-    
+    /**
+ * Retorna a configuração dos tiers.
+ * Você pode sobrescrever via filtro 'soda_perfeita_tiers_config'.
+ */
+private function get_tiers_config() {
+    // thresholds por ponto TOTAL (você pode mudar a fonte de pontos se quiser)
+    $tiers = array(
+        'bronze'   => array('label' => 'Bronze',   'min' => 0),
+        'prata'    => array('label' => 'Prata',    'min' => 1000),
+        'ouro'     => array('label' => 'Ouro',     'min' => 5000),
+        'diamante' => array('label' => 'Diamante', 'min' => 20000),
+    );
+
+    /**
+     * Permite sobrescrever a tabela, ex:
+     * add_filter('soda_perfeita_tiers_config', function($tiers){
+     *   $tiers['prata']['min'] = 1500;
+     *   return $tiers;
+     * });
+     */
+    return apply_filters('soda_perfeita_tiers_config', $tiers);
+}
+/**
+ * Dado o total de pontos, retorna o slug do tier.
+ */
+private function resolve_tier_by_points( $total_points ) {
+    $tiers = $this->get_tiers_config();
+
+    // ordena por 'min' asc para facilitar
+    uasort($tiers, function($a, $b){
+        return ($a['min'] <=> $b['min']);
+    });
+
+    $selected = 'bronze'; // default
+    foreach ( $tiers as $slug => $cfg ) {
+        if ( $total_points >= (int) $cfg['min'] ) {
+            $selected = $slug;
+        } else {
+            break;
+        }
+    }
+
+    return $selected;
+}
+/**
+ * Atualiza rank do GamiPress conforme o tier (se GamiPress estiver ativo
+ * e se o tipo de rank/títulos existirem).
+ */
+private function maybe_assign_gamipress_rank( $user_id, $tier_slug ) {
+    if ( ! function_exists('gamipress_award_rank_to_user') ) {
+        return;
+    }
+
+    // tipo de rank (ajuste para o seu)
+    $rank_type = apply_filters('soda_perfeita_rank_type', 'soda_tier');
+
+    // mapeia tier slug -> rank title/slug (ajuste se necessário)
+    $map = apply_filters('soda_perfeita_rank_map', array(
+        'bronze'   => 'Bronze',
+        'prata'    => 'Prata',
+        'ouro'     => 'Ouro',
+        'diamante' => 'Diamante',
+    ));
+
+    $rank_title = isset($map[$tier_slug]) ? $map[$tier_slug] : null;
+    if ( ! $rank_title ) return;
+
+    if ( function_exists('gamipress_get_rank_id') ) {
+        $rank_id = gamipress_get_rank_id( $rank_type, $rank_title );
+
+        if ( $rank_id ) {
+            // atribui se ainda não tiver
+            gamipress_award_rank_to_user( $rank_id, $user_id );
+        }
+    }
+}
+
+/**
+ * Obtém a pontuação do usuário. Por padrão soma:
+ *  - soda_points
+ *  - community_points
+ *  - financial_points
+ * Se o GamiPress não estiver ativo, retorna 0.
+ */
+private function get_user_total_points( $user_id ) {
+    $types = apply_filters('soda_perfeita_points_types_to_sum', array(
+        'soda_points',
+        'community_points',
+        'financial_points',
+    ));
+
+    $total = 0;
+
+    if ( function_exists('gamipress_get_user_points') ) {
+        foreach ( $types as $pt ) {
+            $total += (int) gamipress_get_user_points( $user_id, $pt );
+        }
+    }
+
+    return (int) apply_filters('soda_perfeita_user_total_points', $total, $user_id, $types);
+}
+
+    /**
+ * Roda diariamente via WP-Cron.
+ * - Calcula total de pontos de cada usuário
+ * - Resolve o tier
+ * - Salva em user_meta 'soda_tier'
+ * - (Opcional) Ajusta rank no GamiPress
+ */
+public function atualizar_tiers_diarios() {
+    // Lote para não estourar memória (ajuste se necessário)
+    $paged    = 1;
+    $per_page = 500;
+
+    do {
+        $q = new WP_User_Query(array(
+            'number'  => $per_page,
+            'paged'   => $paged,
+            'fields'  => array('ID'),
+            // se quiser filtrar por papéis:
+            // 'role__in' => array('subscriber','customer','contributor','author','editor','administrator'),
+        ));
+
+        $users = $q->get_results();
+        if ( empty($users) ) break;
+
+        foreach ( $users as $u ) {
+            $uid = (int) $u->ID;
+
+            $total_points = $this->get_user_total_points( $uid );
+            $tier_slug    = $this->resolve_tier_by_points( $total_points );
+
+            // salva no meta
+            update_user_meta( $uid, 'soda_tier', $tier_slug );
+            update_user_meta( $uid, 'soda_tier_points_total', $total_points );
+
+            // tenta atribuir rank no GamiPress (se configurado)
+            $this->maybe_assign_gamipress_rank( $uid, $tier_slug );
+        }
+
+        $paged++;
+    } while ( count($users) === $per_page );
+
+    do_action('soda_perfeita_after_update_tiers_daily');
+}
+
     /**
      * Configura o sistema de pontos
      */
@@ -205,7 +358,7 @@ class SodaPerfeita_Meritocracia {
     /**
      * Registra elementos no GamiPress
      */
-    private function register_gamipress_elements() {
+    public function register_gamipress_elements() {
         if (!function_exists('gamipress')) {
             return;
         }
@@ -240,7 +393,7 @@ class SodaPerfeita_Meritocracia {
         ));
         
         // Pontos de comunidade (feedback, etc)
-        gamipress_add_points_type(array(
+        $this->gamipress_add_points_type(array(
             'name' => 'community_points',
             'singular_name' => 'Ponto Comunidade',
             'plural_name' => 'Pontos Comunidade',
@@ -250,17 +403,45 @@ class SodaPerfeita_Meritocracia {
         ));
     }
     
-    /**
-     * Registra tipos de achievement no GamiPress
-     */
-    private function register_achievement_types() {
-        gamipress_add_achievement_type(array(
-            'name' => 'soda_achievements',
+   /**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+/**
+ * Registra tipos de achievement no GamiPress
+ */
+private function register_achievement_types() {
+    error_log('Chamando register_achievement_types');
+    error_log('GamiPress ativo: ' . (class_exists('GamiPress') ? 'sim' : 'não'));
+    error_log('Função gamipress_register_achievement_type existe: ' . (function_exists('gamipress_register_achievement_type') ? 'sim' : 'não'));
+    
+    $result = gamipress_add_achievement_type(
+        'soda_achievement',
+        array(
             'singular_name' => 'Conquista Soda',
-            'plural_name' => 'Conquistas Soda',
-            'show_in_menu' => true,
-        ));
-    }
+            'plural_name'   => 'Conquistas Soda',
+            'slug'          => 'conquista-soda',
+            'supports'      => array('title', 'editor', 'thumbnail'),
+            'show_in_menu'  => true,
+        )
+    );
+    
+    error_log('Resultado da chamada: ' . print_r($result, true));
+}
     
     /**
      * Registra tipos de rank no GamiPress
@@ -973,18 +1154,8 @@ class SodaPerfeita_Meritocracia {
     /**
      * Formata nome do benefício
      */
-    private function format_benefit_name($benefit_key) {
-        $names = array(
-            'garrafas_inclusas' => 'Garrafas Inclusas',
-            'material_promocional' => 'Material Promocional',
-            'suporte' => 'Suporte',
-            'workshops' => 'Workshops',
-            'amostras' => 'Amostras',
-            'subsidio' => 'Subsídio Mensal'
-        );
-        
-        return $names[$benefit_key] ?? $benefit_key;
-    }
+    
+
     
     /**
      * Verifica se tier é acessível
@@ -1029,9 +1200,7 @@ class SodaPerfeita_Meritocracia {
     /**
      * Retorna configuração dos tiers
      */
-    public function get_tiers_config() {
-        return $this->tiers_config;
-    }
+    
     
     /**
      * Retorna configuração de pontos
