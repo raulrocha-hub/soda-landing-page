@@ -37,7 +37,12 @@ function soda_perfeita_scripts() {
     wp_enqueue_style('index-css', get_template_directory_uri() . '/css/index.css');
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
     wp_enqueue_style('main-style', get_stylesheet_uri());
-
+    wp_enqueue_style(
+        'google-font-outfit',
+        'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap',
+        [],
+        null
+    );
     // JS
     wp_enqueue_script('bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.bundle.min.js', array('jquery'), '5.3.0', true);
     wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0', true);

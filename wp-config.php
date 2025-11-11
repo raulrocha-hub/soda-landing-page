@@ -97,7 +97,7 @@ define( 'WP_DEBUG_DISPLAY', false );
 
 // Usar versões de desenvolvimento de scripts e CSS (opcional)
 define( 'SCRIPT_DEBUG', true );
-
+define( 'WP_AUTO_UPDATE_CORE', false );
 /* Add any custom values between this line and the "stop editing" line. */
 
 

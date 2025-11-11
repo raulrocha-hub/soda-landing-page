@@ -2,40 +2,58 @@
 if (function_exists('acf_form_head')) acf_form_head();
 get_header(); ?>
 
-<section class="hero-section" id="home" data-testid="hero-section">
-          <div class="hero-overlay"></div>
-          <div class="container">
-            <div class="row align-items-center min-vh-100">
-              <div class="col-lg-7">
-                <div class="hero-content" data-testid="hero-content">
-                  <h1 class="hero-title" data-testid="hero-title">A Revolução das Bebidas Artesanais no Seu Negócio</h1>
-                  <p class="hero-subtitle" data-testid="hero-subtitle">Uma parceria <strong>Preshh + DVG</strong> para transformar seu foodservice com tecnologia, qualidade e rentabilidade </p>
-                  <div class="hero-features" data-testid="hero-features">
-                    <div class="hero-feature-item">
-                      <i class="fas fa-chart-line"></i>
-                      <span>Aumente seu ticket médio</span>
-                    </div>
-                    <div class="hero-feature-item">
-                      <i class="fas fa-sync-alt"></i>
-                      <span>Gere recorrência</span>
-                    </div>
-                    <div class="hero-feature-item">
-                      <i class="fas fa-star"></i>
-                      <span>Padronização premium</span>
-                    </div>
-                  </div>
-                  <div class="hero-cta-group" data-testid="hero-cta-group">
-                    <a href="#contato" class="btn btn-primary btn-lg hero-btn-primary" data-testid="hero-btn-primary">
-                      <i class="fas fa-rocket me-2"></i>Quero Saber Mais </a>
-                    <a href="#sobre" class="btn btn-outline-light btn-lg hero-btn-secondary" data-testid="hero-btn-secondary">
-                      <i class="fas fa-play-circle me-2"></i>Como Funciona </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-5">
-                <div class="hero-image-container" data-testid="hero-image">
-                  <!--<img alt="Soda Perfeita" class="img-fluid hero-product-img" src="<?php echo get_template_directory_uri(); ?>/imgs/soda-perfeita-hero.jpeg">
---><?php
+<section class="hero-section py-5" id="home" data-testid="hero-section" style="background: url(<?php echo get_template_directory_uri(); ?>/imgs/back_desk.png) no-repeat right center;background-size: cover; background-color: #0b4395; color: #fff; position:relative;">
+  <div class="container child-hero">
+    <div class="row align-items-center gy-4">
+  <!-- Logo à esquerda -->
+  <div class="col-lg-9">
+    <img src="<?php echo get_template_directory_uri(); ?>/imgs/logo.png" alt="Soda Perfeita" style="max-width: 130px;">
+  </div>
+
+  <!-- Instagram à direita -->
+  <div class="col-auto">
+    <a href="https://instagram.com/sodaperfeita" target="_blank" rel="noopener" class="d-flex align-items-center text-decoration-none insta-link">
+      <span class="small">siga no instagram <strong><br>@sodaperfeita</strong></span>
+      <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_instag.png" alt="Instagram" width="18" height="18" class="ms-2">
+    </a>
+  </div>
+</div>
+
+    <div class="row align-items-center gy-4">
+      <!-- Texto principal -->
+      <div class="col-lg-6 text-center text-lg-start">
+        <h1 class="fw-bold mb-3">A revolução das bebidas artesanais no seu negócio.</h1>
+        <p class="mb-4 text-light" style="font-size: 1.1rem;">
+          Uma parceria <strong>Preshh</strong> e <strong>DaVinci Gourmet</strong> para <br class="d-none d-lg-block">
+          <span class="text-info">transformar seu foodservice com tecnologia, qualidade e rentabilidade.</span>
+        </p>
+
+        <ul class="horizontal list-unstyled d-flex gap-4 flex-wrap mb-4">
+  <li class="d-flex align-items-center">
+    <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_padrao_grd.png" alt="Preshh Bebidas padronizadas Icon" class="me-2" width="30">
+    <span class="text-success fw-semibold">Bebidas<br>padronizadas</span>
+  </li>
+<li class="d-flex align-items-center">
+    <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_recorr_grd.png" alt="Gere mais recorrência Icon" class="me-2" width="30">
+    <span class="text-success fw-semibold">Gere mais<br>recorrência</span>
+  </li>
+  <li class="d-flex align-items-center">
+    <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_aumen_grd.png" alt="Aumente o Ticket Icon" class="me-2" width="30">
+    <span class="text-success fw-semibold">Aumente<br> o ticket médio</span>
+  </li>
+  
+</ul>
+
+<img src="<?php echo get_template_directory_uri(); ?>/imgs/marcas.png" alt="marcas preshh da vinci gourmet" style="max-width: 200px">
+    
+       
+      </div>
+
+      <!-- Formulário -->
+      <div class="col-lg-6 form-align position-relative">
+
+        <div class="acf-form-container rounded p-4 shadow" style="color: #000;">
+           <?php
  if (function_exists('acf_form')):
       acf_form([
           'post_id'      => 'new_post',
@@ -54,15 +72,12 @@ get_header(); ?>
       echo '<p>Ative o plugin ACF.</p>';
   endif; ?>
                   <br>
-                  <!--<div class="hero-badge" data-testid="hero-badge">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Perfeita porque é feita por você</span>
-                  </div>-->
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
         <section class="sobre-section py-5" id="sobre" data-testid="sobre-section">
           <div class="container">
             <div class="row align-items-center">

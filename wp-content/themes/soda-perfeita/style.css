@@ -8,4 +8,56 @@ Text Domain: soda-perfeita
 
 /* Importações */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import url('assets/css/bootstrap-custom.css');
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+ul.horizontal{
+  font-size:math
+}
+.acf-form-container {
+  max-width: 100%; /* mantém responsivo */
+  transform: scale(0.80); /* escala proporcional */
+  transform-origin: top left; /* ponto de origem para manter alinhamento */
+}
+div.container.child-hero .form-align{
+  position: relative;
+  top: 60px;
+}
+
+.acf-form-container{
+  
+  padding: 0!important;
+}
+.acf-field{
+    padding: 0!important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #adb5bd!important; /* cinza claro */
+}
+
+/* Ajuste visual fino para alinhar texto e ícone */
+
+
+.insta-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: #7fcff5;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.insta-link:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.insta-link img {
+  margin-left: 0.25rem;
+}
