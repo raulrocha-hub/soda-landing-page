@@ -30,7 +30,7 @@ get_header();
     <!-- Conteúdo principal -->
     <div class="row align-items-start align-items-lg-center g-4">
       <!-- Texto -->
-      <div class="col-12 col-lg-6 order-2 order-lg-1 text-center text-lg-start">
+      <div class="col-12 col-lg-6 order-2 order-lg-1 text-center text-lg-start d-none d-md-block">
         <h1 class="fw-bold mb-3">A revolução das bebidas artesanais no seu negócio.</h1>
 
         <p class="mb-4 text-light fs-6 fs-md-5">
@@ -65,6 +65,15 @@ get_header();
 
       <!-- Formulário -->
       <div class="col-12 col-lg-6 order-1 order-lg-2">
+        <div class="col-12 d-lg-none order-2 order-lg-1 text-center text-lg-start">
+        <h1 class="fw-bold mb-3">A revolução das bebidas artesanais no seu negócio.</h1>
+
+        <p class="mb-4 text-light fs-6 fs-md-5">
+          Uma parceria <strong>Preshh</strong> e <strong>DaVinci Gourmet</strong> para
+          <br class="d-none d-lg-inline">
+          <span class="text-info">transformar seu foodservice com tecnologia, qualidade e rentabilidade.</span>
+        </p>
+       </div>
         <div class="card border-0 shadow-lg ms-lg-auto bg-transparent" style="max-width: 560px;">
           <div class="card-body p-4">
             <?php if (function_exists('acf_form')):
@@ -73,7 +82,31 @@ get_header();
             <br>
           </div>
         </div>
+        <div class="d-lg-none mt-4 text-center">
+        <ul class="list-unstyled d-flex gap-4 mb-4 flex-column flex-lg-row align-items-start ms-5 ms-lg-0">
+
+
+          <li class="d-flex align-items-center">
+            <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_padrao_grd.png" class="me-2" width="30"
+              alt="Preshh Bebidas padronizadas">
+            <span class="text-success fw-semibold lh-sm">Bebidas padronizadas</span>
+          </li>
+          <li class="d-flex align-items-center">
+            <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_recorr_grd.png" class="me-2" width="30"
+              alt="Gere mais recorrência">
+            <span class="text-success fw-semibold lh-sm">Gere mais recorrência</span>
+          </li>
+          <li class="d-flex align-items-center">
+            <img src="<?php echo get_template_directory_uri(); ?>/imgs/icon_aumen_grd.png" class="me-2" width="30"
+              alt="Aumente o ticket médio">
+            <span class="text-success fw-semibold lh-sm">Aumente o ticket médio</span>
+          </li>
+        </ul>
+
+        <img src="<?php echo get_template_directory_uri(); ?>/imgs/marcas.png" alt="Preshh e DaVinci Gourmet"
+          class="img-fluid" style="max-width:200px;">
       </div>
+    </div>
     </div>
   </div>
 </section>
