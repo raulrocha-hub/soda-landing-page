@@ -61,3 +61,84 @@ textarea::placeholder {
 .insta-link img {
   margin-left: 0.25rem;
 }
+/* 1) O CONTÊINER precisa ser o "containing block" */
+/* 1) O CONTÊINER precisa ser o "containing block" */
+.sobre-image-wrapper{
+  position: relative;          /* ESSENCIAL */
+  overflow: hidden;            /* corta bolhas fora da borda */
+  display: grid;
+}
+
+/* 2) A CAMADA DAS BOLHAS ocupa 100% do contêiner */
+.bubbles-wrap{
+  position: absolute;
+  inset: 0;                    /* top/right/bottom/left = 0 */
+  z-index: 2;                  /* sobre a imagem */
+  pointer-events: none;
+}
+
+/* 3) A BOLHA é absoluta e usa % do CONTÊINER */
+.bubble{
+          /* ESSENCIAL */
+  bottom: -10%;                /* nasce fora da área e sobe */
+  left: var(--x, 50%);         /* % relativo ao sobre-image-wrapper */
+  transform: translateX(-50%); /* centraliza o círculo */
+  display: block;
+
+  width: var(--s, 16px);
+  height: var(--s, 16px);
+  border-radius: 50%;
+
+  /* visual âmbar com leve brilho */
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgba(255,240,210,.95) 0%,
+      rgba(255,174,85,.55) 55%,
+      rgba(255,140,40,.25) 70%,
+      rgba(255,140,40,.12) 100%);
+  box-shadow:
+    inset 0 0 2px rgba(255,255,255,.35),
+    0 0 6px rgba(255,140,40,.25);
+
+  opacity: var(--o, .9);
+  filter: blur(var(--b, 0px));
+
+  animation:
+    rise var(--t, 12s) linear var(--d, 0s) infinite,
+    sway calc(var(--t, 12s) * .6) ease-in-out var(--d, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+/* sobe e desvanece levemente */
+@keyframes rise{
+  to { transform: translateX(-50%) translateY(-110vh); opacity: .15; }
+}
+
+/* drift horizontal suave */
+@keyframes sway{
+  0%,100%{ transform: translateX(calc(-50% + var(--dx, 0px))) translateY(0); }
+  50%    { transform: translateX(calc(-50% - var(--dx, 0px))) translateY(0); }
+}
+@keyframes swayX{
+  0%,100%{
+    margin-left: calc( (var(--x, 50) * 100%) - (var(--s, 16px) * 0.5) + var(--dx, 100px) );
+  }
+  50%{
+margin-left: calc( (var(--x, 50) * 100%) - (var(--s, 16px) * 0.5) - var(--dx, 100px) );
+  }
+}
+/* acessibilidade: reduz movimento se o usuário pediu */
+@media (prefers-reduced-motion: reduce){
+  .bubble{ animation: none; display:none; }
+}
+#wp-toolbar,#wpadminbar{
+    display: none;
+}
+/* remove o bump que o WP injeta quando a barra estaria ativa */
+html { margin-top: 0 !important; }
+@media screen and (max-width: 782px){
+  html { margin-top: 0 !important; }
+}
+
+
+

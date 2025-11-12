@@ -12,7 +12,7 @@
     <?php wp_body_open(); ?>
     
     <div id="page" class="site">
-        <header class="site-header">
+        <!--<header class="site-header">
             <nav class="navbar navbar-expand-lg navbar-light bg-white">
                 <div class="container">
                     <?php if (has_custom_logo()): ?>
@@ -43,6 +43,6 @@
                     </div>
                 </div>
             </nav>
-        </header>
+        </header>-->
 
         <main class="site-main">

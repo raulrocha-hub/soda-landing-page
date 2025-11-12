@@ -48,7 +48,7 @@ function soda_perfeita_scripts() {
     wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'soda_perfeita_scripts');
-
+/*
 // Custom Post Type para Produtos
 function soda_perfeita_register_products() {
     $labels = array(
@@ -76,7 +76,7 @@ function soda_perfeita_register_products() {
 
     register_post_type('produto', $args);
 }
-add_action('init', 'soda_perfeita_register_products');
+add_action('init', 'soda_perfeita_register_products');*/
 
 add_action('init', function () {
     register_post_type('lead', [

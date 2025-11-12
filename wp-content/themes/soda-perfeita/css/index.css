@@ -113,3 +113,43 @@ code {
         border-bottom-color: inherit;
     }
 }
+
+/* Paleta Soda/Preshh */
+:root,
+[data-bs-theme="preshh"] {
+  /* Azuis (hero/navbar) */
+  --brand-blue-900: #0D1B3E;
+  --brand-blue-900-soft: #004a99;
+  --brand-blue-700: #0168b3;
+  --brand-blue-600: #2A5298;
+  --brand-blue-500: #0075bf;
+
+  /* Acentos quentes */
+  --brand-accent-400: #FFB84D;
+  --brand-accent-500: #FF8A4D;
+
+  /* Suporte */
+  --brand-success: #63B32E;
+  --brand-text: #1a1a1a;
+
+  /* Bootstrap theme tokens principais */
+  --bs-primary: var(--brand-blue-700);
+  --bs-primary-rgb: 27, 60, 115;
+  --bs-info: var(--brand-blue-600);
+  --bs-success: var(--brand-success);
+  --bs-warning: var(--brand-accent-400);
+  --bs-link-color: var(--brand-accent-400);
+  --bs-link-hover-color: var(--brand-accent-500);
+
+  /* Botões/links */
+  --bs-btn-primary-bg: var(--bs-primary);
+  --bs-btn-primary-border-color: var(--bs-primary);
+  --bs-btn-primary-hover-bg: #214a86;          /* tom derivado */
+  --bs-btn-primary-hover-border-color: #214a86;
+
+  /* Cards/containers (mantém fundo padrão claro no site) */
+  --bs-card-bg: #ffffff;
+}
+
+/* Gradiente genérico do Bootstrap para usar nos seus backgrounds */
+:root { --bs-gradient: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,0)); } /* opcional */
