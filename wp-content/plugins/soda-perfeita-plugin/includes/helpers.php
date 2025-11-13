@@ -123,35 +123,22 @@ function soda_perfeita_calcular_media_pedidos_90_dias($cliente_id) {
     $data_fim = date('Y-m-d');
     
     $args = array(
-        'post_type' => 'sp_pedidos',
-        'posts_per_page' => -1,
-        'meta_query' => array(
-            array(
-                'key' => 'cliente_id',
-                'value' => $cliente_id,
-            ),
-            array(
-                'key' => 'data_pedido',
-                'value' => array($data_inicio, $data_fim),
-                'compare' => 'BETWEEN',
-                'type' => 'DATE'
-            ),
-            array(
-                'key' => 'status',
-                'value' => 'entregue',
-            )
-        )
+        'limit' => -1,
+        'customer_id' => $cliente_id,
+        'status' => 'completed',
+        'date_created' => $data_inicio . '...' . $data_fim,
     );
-    
-    $pedidos = get_posts($args);
-    $total_garrafas = 0;
+
+    $pedidos = wc_get_orders($args);
+    $total_itens = 0; // Renomeado para refletir que é a soma de itens
     
     foreach ($pedidos as $pedido) {
-        $quantidade = get_field('quantidade_garrafas', $pedido->ID);
-        $total_garrafas += intval($quantidade);
+        // Usa o método nativo para pegar a quantidade total de itens no pedido
+        $total_itens += $pedido->get_item_count();
     }
     
-    return $total_garrafas > 0 ? round($total_garrafas / 3, 2) : 0;
+    // Calcula a média dividindo pelo número de períodos (90 dias = 3 meses)
+    return $total_itens > 0 ? round($total_itens / 3, 2) : 0;
 }
 
 /**
@@ -362,7 +349,7 @@ function soda_perfeita_validar_cnpj($cnpj) {
  */
 function soda_perfeita_get_distribuidores_por_regiao($regiao = '') {
     $args = array(
-        'post_type' => 'sp_distribuidores',
+        'post_type' => 'distribuidor',
         'posts_per_page' => -1,
         'post_status' => 'publish'
     );

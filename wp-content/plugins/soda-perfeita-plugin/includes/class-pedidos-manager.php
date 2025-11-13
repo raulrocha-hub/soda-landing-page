@@ -1065,7 +1065,7 @@ class SodaPerfeita_Pedidos_Manager {
     public function manage_pedidos_columns($column, $post_id) {
         switch ($column) {
             case 'cliente':
-                $cliente_id = get_field('cliente_id', $post_id);
+                $cliente_id = get_current_user_id();
                 if ($cliente_id) {
                     echo '<a href="' . admin_url("post.php?post={$cliente_id}&action=edit") . '">';
                     echo esc_html(get_the_title($cliente_id));
