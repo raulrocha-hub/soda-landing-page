@@ -2,7 +2,7 @@
 /**
  * The template for displaying WooCommerce pages
  */
-get_header(); ?>
+get_header('loja'); ?>
 
 <div class="container py-5">
     <div class="row">

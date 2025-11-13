@@ -37,8 +37,9 @@ get_header(); ?>
                         <?php comments_template(); ?>
                     </div>
                 <?php endif; ?>
-              <?php endif; ?>
+              
             <?php endwhile; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

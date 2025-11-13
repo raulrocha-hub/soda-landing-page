@@ -281,5 +281,48 @@ if (in_array($updated, ['true','1'], true)) : ?>
       } catch(e) {}
     })();
   </script>
-<?php endif; ?>
+<?php endif; 
+
+// Registrar menus
+function register_loja_menus() {
+    register_nav_menus(array(
+        'menu-loja' => 'Menu Principal da Loja',
+        'menu-categorias' => 'Menu de Categorias da Loja'
+    ));
+}
+add_action('init', 'register_loja_menus');
+
+add_action('wp_ajax_product_search', 'product_search');
+add_action('wp_ajax_nopriv_product_search', 'product_search');
+
+function product_search() {
+    $search_term = sanitize_text_field($_POST['search_term']);
+    
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => 8,
+        's' => $search_term,
+        'post_status' => 'publish'
+    );
+    
+    $search_query = new WP_Query($args);
+    $products = array();
+    
+    if ($search_query->have_posts()) {
+        while ($search_query->have_posts()) {
+            $search_query->the_post();
+            $product = wc_get_product(get_the_ID());
+            
+            $products[] = array(
+                'name' => get_the_title(),
+                'permalink' => get_permalink(),
+                'price' => $product->get_price_html(),
+                'image' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')
+            );
+        }
+        wp_reset_postdata();
+    }
+    
+    wp_send_json($products);
+}
 

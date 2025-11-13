@@ -1,5 +1,5 @@
 <?php
-get_header(); 
+get_header('loja');
 
 // Configurações do catálogo
 $columns = get_theme_mod('products_columns', 4);

@@ -638,3 +638,372 @@ html { margin-top: 0 !important; }
 .woocommerce-tabs ul.tabs li.active {
     background: rgba(255, 255, 255, 0.9);
 }
+
+/* ===== LAYOUT MODERNO DA LOJA ===== */
+
+/* Container principal */
+.woocommerce .container {
+    max-width: 1400px;
+}
+
+/* Grid de produtos moderno */
+.woocommerce ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+    display: none;
+}
+
+/* Cards de produtos */
+.woocommerce ul.products li.product {
+    background: #fff;
+    border-radius: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.woocommerce ul.products li.product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Imagem do produto */
+.woocommerce ul.products li.product .woocommerce-loop-product__link {
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+.woocommerce ul.products li.product img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.woocommerce ul.products li.product:hover img {
+    transform: scale(1.1);
+}
+
+/* Badge de promoção */
+.woocommerce span.onsale {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    border-radius: 50px;
+    padding: 8px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Conteúdo do card */
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 20px 20px 10px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.woocommerce ul.products li.product:hover .woocommerce-loop-product__title {
+    color: #28a745;
+}
+
+/* Preço */
+.woocommerce ul.products li.product .price {
+    display: block;
+    margin: 0 20px 15px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #28a745;
+}
+
+.woocommerce ul.products li.product .price del {
+    color: #6c757d;
+    font-size: 16px;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.woocommerce ul.products li.product .price ins {
+    background: transparent;
+    color: #28a745;
+}
+
+/* Botão adicionar ao carrinho */
+.woocommerce ul.products li.product .button {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin: 0 20px 20px;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.woocommerce ul.products li.product .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(135deg, #20c997, #28a745);
+}
+
+/* Rating */
+.woocommerce .star-rating {
+    color: #ffc107;
+    margin: 0 20px 15px;
+    font-size: 14px;
+}
+
+/* ===== HEADER DA LOJA ===== */
+
+/* Resultados e ordenação */
+.woocommerce-result-count {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0;
+}
+
+.woocommerce-ordering {
+    margin: 0;
+}
+
+.woocommerce-ordering select {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.woocommerce-ordering select:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* ===== PAGINAÇÃO ===== */
+
+.woocommerce-pagination {
+    margin-top: 60px;
+}
+
+.woocommerce-pagination ul.page-numbers {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+}
+
+.woocommerce-pagination ul.page-numbers li {
+    margin: 0;
+}
+
+.woocommerce-pagination ul.page-numbers li a,
+.woocommerce-pagination ul.page-numbers li span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.woocommerce-pagination ul.page-numbers li a {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid transparent;
+}
+
+.woocommerce-pagination ul.page-numbers li a:hover {
+    background: #28a745;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.woocommerce-pagination ul.page-numbers li span.current {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* ===== FILTROS E SIDEBAR ===== */
+
+.woocommerce .widget {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.woocommerce .widget h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.woocommerce .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.woocommerce .widget ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.woocommerce .widget ul li:last-child {
+    border-bottom: none;
+}
+
+.woocommerce .widget ul li a {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.woocommerce .widget ul li a:hover {
+    color: #28a745;
+}
+
+/* ===== LOADING ANIMADO ===== */
+
+.woocommerce-loading {
+    position: relative;
+    min-height: 200px;
+}
+
+.woocommerce-loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #28a745;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 768px) {
+    .woocommerce ul.products {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .woocommerce-ordering {
+        margin-top: 15px;
+    }
+    
+    .woocommerce-result-count {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .woocommerce-pagination ul.page-numbers {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .woocommerce ul.products {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .woocommerce ul.products li.product img {
+        height: 200px;
+    }
+}
+
+/* ===== EFEITOS EXTRAS ===== */
+
+/* Quick view effect */
+.quick-view-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(40, 167, 69, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.woocommerce ul.products li.product:hover .quick-view-overlay {
+    opacity: 1;
+}
+
+.quick-view-btn {
+    background: white;
+    color: #28a745;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-view-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Skeleton loading */
+.skeleton-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

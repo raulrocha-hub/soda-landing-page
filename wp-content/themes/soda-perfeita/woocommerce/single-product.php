@@ -1,11 +1,12 @@
 <?php
-get_header();
+get_header('loja');
 
 while (have_posts()) : the_post(); 
     global $product;
 ?>
 
 <div class="container py-5">
+    
     <div class="row">
         <!-- Breadcrumb -->
         <div class="col-12 mb-4">
