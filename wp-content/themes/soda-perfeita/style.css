@@ -274,3 +274,367 @@ html { margin-top: 0 !important; }
 .product-image-loaded {
     opacity: 1;
 }
+
+/* ===== ESTILOS MODERNOS PARA AS TABS ===== */
+
+.woocommerce-tabs {
+    margin-top: 40px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* Container das tabs */
+.woocommerce-tabs ul.tabs {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Itens das tabs */
+.woocommerce-tabs ul.tabs li {
+    margin: 0;
+    position: relative;
+}
+
+.woocommerce-tabs ul.tabs li:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.woocommerce-tabs ul.tabs li.active:after {
+    width: 100%;
+}
+
+.woocommerce-tabs ul.tabs li a {
+    display: block;
+    padding: 20px 30px;
+    text-decoration: none;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    border: none;
+    background: transparent !important;
+}
+
+.woocommerce-tabs ul.tabs li.active a {
+    color: #28a745;
+    background: transparent;
+}
+
+.woocommerce-tabs ul.tabs li a:hover {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.05) !important;
+}
+
+/* Ícones nas tabs */
+.woocommerce-tabs ul.tabs li.description_tab a:before {
+    content: "📋";
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.woocommerce-tabs ul.tabs li.additional_information_tab a:before {
+    content: "📊";
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.woocommerce-tabs ul.tabs li.reviews_tab a:before {
+    content: "⭐";
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* Conteúdo das tabs */
+.woocommerce-Tabs-panel {
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilo específico para descrição */
+.woocommerce-Tabs-panel--description {
+    background: #fff;
+}
+
+.woocommerce-Tabs-panel--description h2 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.woocommerce-Tabs-panel--description p {
+    line-height: 1.8;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Estilo específico para informações adicionais */
+.woocommerce-Tabs-panel--additional_information {
+    background: #fff;
+}
+
+.woocommerce-Tabs-panel--additional_information h2 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.shop_attributes {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.shop_attributes th,
+.shop_attributes td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.shop_attributes th {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    font-weight: 600;
+    width: 30%;
+}
+
+.shop_attributes tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.shop_attributes tr:hover {
+    background-color: #e8f5e8;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo específico para reviews */
+.woocommerce-Tabs-panel--reviews {
+    background: #fff;
+}
+
+.woocommerce-Reviews-title {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Formulário de review */
+.comment-form-rating {
+    margin-bottom: 25px;
+}
+
+.comment-form-rating label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+}
+
+.stars a {
+    color: #ffc107;
+    text-decoration: none;
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.stars a:hover {
+    transform: scale(1.2);
+}
+
+/* Lista de comentários */
+.woocommerce-Reviews .commentlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.woocommerce-Reviews .commentlist li {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 4px solid #28a745;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.woocommerce-Reviews .commentlist li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.woocommerce-Reviews .commentlist li .comment-text {
+    border: none;
+    padding: 0;
+}
+
+.woocommerce-Reviews .commentlist li .meta {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.woocommerce-Reviews .commentlist li .description p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.star-rating {
+    color: #ffc107;
+    margin-bottom: 10px;
+}
+
+/* Formulário de comentário */
+.comment-respond {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.comment-reply-title {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.comment-form .comment-form-rating {
+    margin-bottom: 20px;
+}
+
+.comment-form .comment-form-comment label,
+.comment-form .comment-form-author label,
+.comment-form .comment-form-email label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.comment-form input[type="text"]:focus,
+.comment-form input[type="email"]:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.comment-form .form-submit {
+    margin-top: 20px;
+}
+
+.comment-form .submit {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comment-form .submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* Responsividade para as tabs */
+@media (max-width: 768px) {
+    .woocommerce-tabs ul.tabs {
+        flex-direction: column;
+    }
+    
+    .woocommerce-tabs ul.tabs li {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .woocommerce-tabs ul.tabs li a {
+        padding: 15px 20px;
+    }
+    
+    .woocommerce-Tabs-panel {
+        padding: 25px;
+    }
+    
+    .shop_attributes th,
+    .shop_attributes td {
+        padding: 12px 15px;
+        display: block;
+        width: 100%;
+    }
+    
+    .shop_attributes th {
+        background: #28a745;
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .shop_attributes tr {
+        display: block;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+}
+
+/* Efeito de loading suave */
+.woocommerce-Tabs-panel {
+    opacity: 0;
+    animation: tabFadeIn 0.4s ease forwards;
+}
+
+@keyframes tabFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Indicador visual de aba ativa */
+.woocommerce-tabs ul.tabs li.active {
+    background: rgba(255, 255, 255, 0.9);
+}
