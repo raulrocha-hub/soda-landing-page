@@ -2,6 +2,7 @@
 /**
  * Header específico para a loja
  */
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 

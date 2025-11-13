@@ -325,4 +325,13 @@ function product_search() {
     
     wp_send_json($products);
 }
-
+/*
+function redirecionar_visitantes_para_login() {
+    // Verifica se é um usuário não logado em uma página do WooCommerce
+    if ( ! is_user_logged_in() && ( is_shop() || is_product_category() || is_product() || is_cart() || is_checkout() || is_account_page() ) ) {
+        wp_redirect( wp_login_url( get_permalink() ) );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'redirecionar_visitantes_para_login' );
+*/
