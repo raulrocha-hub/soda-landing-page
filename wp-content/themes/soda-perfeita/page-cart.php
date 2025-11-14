@@ -335,6 +335,23 @@ body{
 * {
     box-sizing: border-box;
 }
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+    position: relative !important;
+    padding-left: 3.2rem !important; /* espaço pro ícone */
+    display: flex;
+    align-items: center;
+}
+
+.woocommerce-message::before,
+.woocommerce-info::before,
+.woocommerce-error::before {
+    left: 1rem !important; /* posiciona corretamente */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
 </style>
 
 <?php get_footer('loja'); ?>

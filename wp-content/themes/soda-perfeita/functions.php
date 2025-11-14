@@ -727,3 +727,104 @@ function soda_perfeita_remover_todos_widgets_dashboard() {
         remove_meta_box($widget, 'dashboard', 'side');
     }
 }
+
+add_action('woocommerce_checkout_order_processed', 'copiar_metadados_ultimo_pedido', 20, 3);
+
+function copiar_metadados_ultimo_pedido($order_id, $posted_data, $order) {
+    
+    // 1. Identifica o cliente
+    $customer_id = $order->get_customer_id();
+    
+    // Se o pedido não está associado a um usuário logado, não faz nada
+    if ($customer_id === 0) {
+        return;
+    }
+
+    // 2. Obtém o último pedido pago/completo deste cliente
+    $ultimos_pedidos = wc_get_orders(array(
+        'customer_id' => $customer_id,
+        'status' => array('completed', 'processing'),
+        'limit' => 1,
+        'orderby' => 'date',
+        'order' => 'DESC'
+    ));
+    
+    $distribuidor = '';
+    $estabelecimento = '';
+    $franqueado = '';
+    $encontrou_dados = false;
+
+    // 3. Se encontrou último pedido, extrai os metadados
+    if (!empty($ultimos_pedidos)) {
+        $ultimo_pedido = $ultimos_pedidos[0];
+        $distribuidor = $ultimo_pedido->get_meta('distribuidor');
+        $estabelecimento = $ultimo_pedido->get_meta('estabelecimento');
+        $franqueado = $ultimo_pedido->get_meta('franqueado');
+        
+        if (!empty($distribuidor) || !empty($estabelecimento) || !empty($franqueado)) {
+            $encontrou_dados = true;
+        }
+    }
+    
+    // 4. Se não encontrou dados no último pedido, busca nos user metas
+    if (!$encontrou_dados) {
+        $distribuidor = get_user_meta($customer_id, 'distribuidor_responsavel', true);
+        $estabelecimento = get_user_meta($customer_id, 'estabelecimento_vinculado', true);
+        $franqueado = get_user_meta($customer_id, 'franqueado_responsavel', true);
+        
+        // Se todos os user metas estiverem vazios, não faz nada
+        if (empty($distribuidor) && empty($estabelecimento) && empty($franqueado)) {
+            return;
+        }
+    }
+
+    // 5. Atualiza os metadados do NOVO pedido usando funções WooCommerce
+    $novo_pedido = wc_get_order($order_id);
+    $acf_distribuidor = 'field_691639515470c';
+    $acf_estabelecimento = 'field_691639b25ca86';
+    $acf_franqueado = 'field_69163984c417f';
+    
+    if (!empty($distribuidor)) {
+        $novo_pedido->update_meta_data('distribuidor', $distribuidor);
+        $novo_pedido->update_meta_data('_distribuidor', $acf_distribuidor);
+    }
+    
+    if (!empty($estabelecimento)) {
+        $novo_pedido->update_meta_data('estabelecimento', $estabelecimento);
+        $novo_pedido->update_meta_data('_estabelecimento', $acf_estabelecimento);
+    }
+    
+    if (!empty($franqueado)) {
+        $novo_pedido->update_meta_data('franqueado', $franqueado);
+        $novo_pedido->update_meta_data('_franqueado', $acf_franqueado);
+    }
+
+    // 6. Salva as alterações no novo pedido apenas se algum dado foi adicionado
+    if (!empty($distribuidor)) {
+        $novo_pedido->save();
+        
+        // Debug opcional
+        error_log("Metadados copiados para pedido {$order_id} - Distribuidor: {$distribuidor}, Estabelecimento: {$estabelecimento}, Franqueado: {$franqueado}");
+    }
+}
+
+add_action( 'add_meta_boxes', function (){
+    if ( current_user_can( 'distribuidor_dvg' ) ) {
+        remove_meta_box( 'order_custom', wc_get_page_screen_id( 'shop-order' ), 'normal' );
+    }
+}, 90 );
+
+function meu_logotipo_login_personalizado() {
+    ?>
+    <style type="text/css">
+        body.login div#login h1 a {
+            background-image: url(<?php echo get_template_directory_uri(); ?>/imgs/logo.png);
+            padding-bottom: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100%;
+        }
+    </style>
+    <?php
+}
+add_action('login_enqueue_scripts', 'meu_logotipo_login_personalizado');

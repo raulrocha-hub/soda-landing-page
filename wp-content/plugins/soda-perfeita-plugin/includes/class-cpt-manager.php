@@ -272,6 +272,19 @@ class SodaPerfeita_CPT_Manager {
                     'width' => '50',
                 ),
             ),
+            array(
+                'key' => 'field_customer_estabelecimento',
+                'label' => 'Estabelecimento Vinculado',
+                'name' => 'estabelecimento_vinculado',
+                'type' => 'post_object',
+                'post_type' => array('estabelecimento'), // Seu CPT de estabelecimento criado via ACF
+                'multiple' => 0,
+                'return_format' => 'id',
+                'ui' => 1,
+                'wrapper' => array(
+                    'width' => '50',
+                ),
+            ),
         );
     }
     

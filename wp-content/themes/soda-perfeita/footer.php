@@ -1,13 +1,13 @@
         </main>
 
-        <footer class="site-footer text-white py-5" style="background: #0b4395 url('<?php echo get_template_directory_uri(); ?>/imgs/back_desk.png') no-repeat right center; background-size: cover;">
+       <!--<footer class="site-footer text-white py-5" style="background: #0b4395 url('<?php echo get_template_directory_uri(); ?>/imgs/back_desk.png') no-repeat right center; background-size: cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
                         <h5>Soda Perfeita</h5>
                         <p style="color:white">A Revolução das Bebidas Artesanais no Seu Negócio</p>
                     </div>
-                    <div class="col-md-4">
+                   <!-- <div class="col-md-4">
                         <h5>Links Rápidos</h5>
                         <?php
                         wp_nav_menu(array(
@@ -17,8 +17,8 @@
                             'fallback_cb' => false
                         ));
                         ?>
-                    </div>
-                    <div class="col-md-4">
+                    </div>-->
+                    <!--<div class="col-md-4">
                         <h5>Contato</h5>
                         <p style="color:white">Entre em contato conosco</p>
                     </div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
     </div>
 
     <?php wp_footer(); ?>

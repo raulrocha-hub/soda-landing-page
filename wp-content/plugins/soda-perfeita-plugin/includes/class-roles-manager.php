@@ -34,6 +34,7 @@ class SodaPerfeita_Roles_Manager {
      * Configura os papéis do sistema
      */
     private function setup_roles_config() {
+        remove_role('cliente_final');
         $this->roles_config = array(
             'admin_preshh' => array(
                 'name' => 'Admin Preshh',
@@ -104,7 +105,11 @@ class SodaPerfeita_Roles_Manager {
                     'access_soda_dashboard' => true
                 )
             ),
-            'cliente_final' => array(
+            
+        );
+    }
+    /**
+     * 'cliente_final' => array(
                 'name' => 'Cliente Final',
                 'display_name' => 'Cliente Final',
                 'description' => 'Clientes finais do programa Soda Perfeita',
@@ -120,9 +125,7 @@ class SodaPerfeita_Roles_Manager {
                     'complete_soda_training' => true
                 )
             )
-        );
-    }
-    
+     */
     /**
      * Configura as capabilities customizadas
      */

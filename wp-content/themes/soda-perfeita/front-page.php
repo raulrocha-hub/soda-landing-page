@@ -111,7 +111,7 @@ get_header();
   </div>
 </section>
 
-
+<!--
 <section class="sobre-section py-5" id="sobre" data-testid="sobre-section">
   <div class="container">
     <div class="row align-items-center">
@@ -732,7 +732,7 @@ get_header();
       </div>
     </div>
   </div>
-</section>
+</section>-->
 <?php get_footer(); ?>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
