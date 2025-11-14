@@ -691,3 +691,39 @@ function soda_perfeita_esconder_menus_css_distribuidor() {
         }
     </style>';
 }
+
+// REMOVER TODOS OS WIDGETS DO PAINEL WORDPRESS
+add_action('wp_dashboard_setup', 'soda_perfeita_remover_todos_widgets_dashboard');
+
+function soda_perfeita_remover_todos_widgets_dashboard() {
+    global $wp_meta_boxes;
+    
+    // Lista de todos os contextos do dashboard
+    $contexts = array('normal', 'side', 'advanced');
+    
+    foreach ($contexts as $context) {
+        if (isset($wp_meta_boxes['dashboard'][$context])) {
+            foreach ($wp_meta_boxes['dashboard'][$context] as $priority => $boxes) {
+                foreach ($boxes as $box_id => $box_data) {
+                    remove_meta_box($box_id, 'dashboard', $context);
+                }
+            }
+        }
+    }
+    
+    // Remover widgets específicos que podem escapar
+    $widgets_especificos = array(
+        'dashboard_primary',           // Notícias do WordPress
+        'dashboard_quick_press',       // Rascunho rápido
+        'dashboard_right_now',         // Resumo do site
+        'dashboard_activity',          // Atividade recente
+        'dashboard_site_health',       // Saúde do site
+        'woocommerce_dashboard_status', // Status do WooCommerce
+        'wc_admin_dashboard_setup',    // Setup WooCommerce
+    );
+    
+    foreach ($widgets_especificos as $widget) {
+        remove_meta_box($widget, 'dashboard', 'normal');
+        remove_meta_box($widget, 'dashboard', 'side');
+    }
+}
