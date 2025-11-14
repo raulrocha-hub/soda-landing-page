@@ -362,7 +362,7 @@ function soda_perfeita_corrigir_capabilities_distribuidor() {
         'delete_others_shop_orders' => false,
         
         // Outras capacidades do WooCommerce
-        'manage_woocommerce' => false,
+        'manage_woocommerce' => true,
         'view_woocommerce_reports' => false,
     ));
 }
@@ -377,44 +377,71 @@ add_action('init', 'soda_perfeita_corrigir_capabilities_distribuidor');
  * Restringe a lista para mostrar apenas pedidos vinculados ao distribuidor logado.
  */
 // 2. FILTRAR OS PEDIDOS VISÍVEIS para o distribuidor
-add_filter('woocommerce_order_data_store_cpt_get_orders_query', 'soda_perfeita_filtrar_pedidos_distribuidor_query', 10, 2);
+/**
+ * Modifica a query principal da lista de pedidos no Admin para distribuidores
+ * Hook específico para lojas usando HPOS (High-Performance Order Storage)
+ */
+add_filter( 'woocommerce_order_list_table_prepare_items_query_args', 'soda_perfeita_filtrar_pedidos_admin_por_distribuidor' );
 
-function soda_perfeita_filtrar_pedidos_distribuidor_query($query, $query_vars) {
-    if (!is_admin()) return $query;
-    
-    $current_user = wp_get_current_user();
-    if (!in_array('distribuidor_dvg', $current_user->roles)) {
-        return $query;
+function soda_perfeita_filtrar_pedidos_admin_por_distribuidor( $query_args ) {
+    // Verifica se estamos no admin e se o usuário atual é um distribuidor
+    if ( ! is_admin() || ! current_user_can( 'distribuidor_dvg' ) ) {
+        return $query_args;
     }
-    
-    // Obter o ID do distribuidor associado a este usuário
-    $distribuidor_id = soda_perfeita_obter_distribuidor_por_usuario($current_user->ID);
-    
-    if ($distribuidor_id) {
-        if (!isset($query['meta_query'])) {
-            $query['meta_query'] = array();
-        }
-        
-        $query['meta_query'][] = array(
-            'key' => 'distribuidor',
-            'value' => $distribuidor_id,
-            'compare' => '='
+
+    $current_user_id = get_current_user_id();
+    $distribuidor_id = soda_perfeita_obter_distribuidor_por_usuario( $current_user_id );
+
+    // Se encontrou o ID do distribuidor, aplica o filtro pela meta_key 'distribuidor'
+    if ( $distribuidor_id ) {
+        $query_args['meta_query'] = array(
+            array(
+                'key' => 'distribuidor', // Substitua pela sua meta_key
+                'value' => $distribuidor_id,
+                'compare' => '='
+            )
         );
     } else {
-        // Se não encontrou distribuidor, não mostrar nenhum pedido
-        $query['post__in'] = array(0);
+        // Se o distribuidor não está configurado, não retorna nenhum pedido
+        $query_args['post__in'] = array(0);
     }
-    
-    return $query;
+
+    return $query_args;
 }
 
-// 3. VERIFICAÇÃO DE ACESSO para edição individual de pedidos
+// FUNÇÃO PARA OBTER META DO PEDIDO VIA SQL
+function soda_perfeita_obter_meta_distribuidor_sql($order_id) {
+    global $wpdb;
+    
+    // Tenta na tabela HPOS primeiro
+    $meta_value = $wpdb->get_var($wpdb->prepare("
+        SELECT meta_value 
+        FROM {$wpdb->prefix}wc_orders_meta 
+        WHERE order_id = %d 
+        AND meta_key = 'distribuidor'
+    ", $order_id));
+    
+    if ($meta_value !== null) {
+        return $meta_value;
+    }
+    
+    // Se não encontrou no HPOS, tenta na tabela postmeta tradicional
+    $meta_value = $wpdb->get_var($wpdb->prepare("
+        SELECT meta_value 
+        FROM {$wpdb->prefix}postmeta 
+        WHERE post_id = %d 
+        AND meta_key = 'distribuidor'
+    ", $order_id));
+    
+    return $meta_value;
+}
+
+// CORREÇÃO DA VERIFICAÇÃO DE ACESSO
 add_action('before_woocommerce_init', 'soda_perfeita_verificar_acesso_pedido_distribuidor');
 
 function soda_perfeita_verificar_acesso_pedido_distribuidor() {
     if (!is_admin()) return;
     
-    // Verificar se estamos na página de edição de pedido
     if (isset($_GET['page']) && $_GET['page'] === 'wc-orders' && isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) {
         $current_user = wp_get_current_user();
         
@@ -423,9 +450,11 @@ function soda_perfeita_verificar_acesso_pedido_distribuidor() {
             $distribuidor_id = soda_perfeita_obter_distribuidor_por_usuario($current_user->ID);
             
             if ($distribuidor_id) {
-                $order_distribuidor = get_field('distribuidor', $order_id);
+                // USA SQL DIRETO PARA OBTER O META
+                (int)$order_distribuidor = soda_perfeita_obter_meta_distribuidor_sql($order_id);
+                // Debug para ver o que está acontecendo
+                error_log("DEBUG - Order ID: {$order_id}, Distribuidor ID: {$distribuidor_id}, Order Distribuidor: {$order_distribuidor}");
                 
-                // Se o pedido não pertence a este distribuidor, bloquear acesso
                 if ($order_distribuidor != $distribuidor_id) {
                     wp_die(
                         'Você não tem permissão para acessar este pedido. Apenas pedidos atribuídos ao seu distribuidor podem ser visualizados.',
@@ -444,12 +473,7 @@ function soda_perfeita_verificar_acesso_pedido_distribuidor() {
     }
 }
 
-/**
- * 2. RESTRINGIR ACESSO À EDIÇÃO DE PEDIDOS INDIVIDUAIS
- * Impede que um distribuidor acesse pedidos que não são dele.
- */
-add_action( 'current_screen', 'soda_perfeita_restringir_acesso_pedido_individual' );
-
+// DEBUG MELHORADO
 
 
 /**
@@ -482,24 +506,7 @@ $distribuidorID = soda_perfeita_obter_distribuidor_por_usuario($user_id);
 // Restringir acesso a pedidos individuais
 add_action('current_screen', 'soda_perfeita_restringir_acesso_pedido_individual');
 // DEBUG - Verificar capabilities e queries
-add_action('admin_notices', 'soda_perfeita_debug_distribuidor');
-function soda_perfeita_debug_distribuidor() {
-    $current_user = wp_get_current_user();
-    
-    if (in_array('distribuidor_dvg', $current_user->roles)) {
-        echo '<div class="notice notice-warning">';
-        echo '<h3>Debug Distribuidor</h3>';
-        echo '<p><strong>User ID:</strong> ' . $current_user->ID . '</p>';
-        echo '<p><strong>Distribuidor ID:</strong> ' . soda_perfeita_obter_distribuidor_por_usuario($current_user->ID) . '</p>';
-        echo '<p><strong>Capabilities:</strong></p>';
-        echo '<ul>';
-        echo '<li>edit_shop_orders: ' . (current_user_can('edit_shop_orders') ? 'SIM' : 'NÃO') . '</li>';
-        echo '<li>edit_others_shop_orders: ' . (current_user_can('edit_others_shop_orders') ? 'SIM' : 'NÃO') . '</li>';
-        echo '<li>read_shop_order: ' . (current_user_can('read_shop_order') ? 'SIM' : 'NÃO') . '</li>';
-        echo '</ul>';
-        echo '</div>';
-    }
-}
+
 /**
  * 2. RESTRINGIR ACESSO À EDIÇÃO DE PEDIDOS INDIVIDUAIS
  * Impede que um distribuidor acesse pedidos que não são dele.
@@ -607,3 +614,80 @@ function soda_perfeita_debug_distribuidor_access() {
     }
 }
 add_action('admin_init', 'soda_perfeita_debug_distribuidor_access');
+/**
+ * Summary of redirecionar_apos_login
+ * @param mixed $user_login
+ * @param mixed $user
+ * @return void
+ */
+function redirecionar_apos_login($user_login, $user) {
+    // Verificar se o usuário tem o papel 'distribuidor_dvg'
+    if (in_array('distribuidor_dvg', $user->roles)) {
+        wp_redirect(admin_url());
+        exit();
+    }
+    // Verificar se o usuário tem o papel 'customer'
+    elseif (in_array('customer', $user->roles)) {
+        wp_redirect(home_url('/shop/'));
+        exit();
+    }
+}
+add_action('wp_login', 'redirecionar_apos_login', 10, 2);
+
+// DEBUG PARA VER TODOS OS MENUS DO WOOCOMMERCE
+// REMOVER SUBMENUS ESPECÍFICOS DO WOOCOMMERCE PARA DISTRIBUIDORES
+add_action('admin_menu', 'soda_perfeita_remover_submenus_distribuidor', 9999);
+
+function soda_perfeita_remover_submenus_distribuidor() {
+    $current_user = wp_get_current_user();
+    
+    if (!in_array('distribuidor_dvg', $current_user->roles)) {
+        return;
+    }
+    
+    // Remover submenus específicos do WooCommerce
+    remove_submenu_page('woocommerce', 'wc-settings');      // Configurações
+    remove_submenu_page('woocommerce', 'wc-status');        // Status do sistema
+    remove_submenu_page('woocommerce', 'wc-addons');        // Extensões
+    remove_submenu_page('woocommerce', 'wc-admin');         // Dashboard WooCommerce
+    
+    // Tentar remover marketing (pode variar entre versões)
+    remove_submenu_page('woocommerce', 'wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM');
+    
+    // Remover analytics se existir
+    remove_submenu_page('woocommerce', 'wc-admin&path=/analytics');
+
+}
+
+// CSS PARA ESCONDER MENUS RESIDUAIS
+add_action('admin_head', 'soda_perfeita_esconder_menus_css_distribuidor');
+
+function soda_perfeita_esconder_menus_css_distribuidor() {
+    $current_user = wp_get_current_user();
+    
+    if (!in_array('distribuidor_dvg', $current_user->roles)) {
+        return;
+    }
+    
+    echo '<style>
+        /* Esconder submenus específicos do WooCommerce */
+        .toplevel_page_woocommerce .wp-submenu-wrap li:not(:nth-child(3)):not(:nth-child(4)) {
+            display: none !important;
+        }
+        
+        /* Esconder itens específicos por texto */
+        .toplevel_page_woocommerce .wp-submenu a[href*="wc-settings"],
+        .toplevel_page_woocommerce .wp-submenu a[href*="wc-status"],
+        .toplevel_page_woocommerce .wp-submenu a[href*="wc-addons"],
+        #toplevel_page_admin-page-wc-settings-tab-checkout-from-PAYMENTS_MENU_ITEM,
+        #toplevel_page_woocommerce-marketing {
+            display: none !important;
+        }
+        
+        /* Manter apenas Pedidos e Produtos visíveis */
+        .toplevel_page_woocommerce .wp-submenu li:nth-child(3),
+        .toplevel_page_woocommerce .wp-submenu li:nth-child(4) {
+            display: block !important;
+        }
+    </style>';
+}
