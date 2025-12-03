@@ -677,7 +677,7 @@ get_header();
             </div>
             <div>
               <h5>E-mail</h5>
-              <p>contato@sodaperfeita.com.br</p>
+              <p>contato@loja.sodaperfeita.com.br</p>
             </div>
           </div>
           <div class="contato-info-item" data-testid="contato-info-hours">
