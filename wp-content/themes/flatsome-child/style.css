@@ -7,6 +7,15 @@ Version: 3.0
 */
 
 /*************** ADD CUSTOM CSS HERE.   ***************/
+/* Esconde o texto do botão por padrão */
+.wc-block-cart__submit-button .wc-block-components-button__text {
+    visibility: hidden;
+}
+
+/* Só mostra quando o JS adicionar a classe na tag <html> */
+html.soda-checkout-ready .wc-block-cart__submit-button .wc-block-components-button__text {
+    visibility: visible;
+}
 
 
 @media only screen and (max-width: 48em) {
@@ -14,3 +23,4 @@ Version: 3.0
 
 
 }
+

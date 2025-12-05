@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Avaliação para Plano Piloto - Soda Perfeita</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5.x -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --soda-blue:  #2558A4;
+            --soda-pink:  #EC2790;
+            --soda-yellow:#FFD050;
+            --soda-cyan:  #01AFEF;
+        }
+
+        body {
+            background: #f4f6fb;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .soda-logo {
+            max-height: 60px;
+        }
+
+        .hero-area {
+            background: linear-gradient(135deg, var(--soda-blue), var(--soda-cyan));
+            color: #fff;
+            border-radius: 1.25rem;
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .2rem .75rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,.12);
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-card {
+            border-radius: 1.25rem;
+            border: 0;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .form-card .card-header {
+            border-radius: 1.25rem 1.25rem 0 0;
+            background: #ffffff;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+
+        .step-indicators {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .4rem .75rem;
+            border-radius: 999px;
+            font-size: .8rem;
+            border: 1px solid transparent;
+            color: #6b7280;
+            background: #f3f4f6;
+        }
+
+        .step-indicator.active {
+            background: var(--soda-blue);
+            color: #fff;
+        }
+
+        .step-indicator.done {
+            background: #e0f7f9;
+            color: #036666;
+            border-color: #a5f3fc;
+        }
+
+        .step-indicator .step-number {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            font-weight: 600;
+            background: rgba(0,0,0,.08);
+        }
+
+        .step-indicator.active .step-number {
+            background: rgba(255,255,255,.22);
+        }
+
+        .step-indicator.done .step-number {
+            background: #0ea5e9;
+            color: #fff;
+        }
+
+        .progress {
+            height: 6px;
+            border-radius: 999px;
+            background: #e5e7eb;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--soda-blue), var(--soda-pink));
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: .2rem;
+        }
+
+        .question-helper {
+            font-size: .8rem;
+            color: #6b7280;
+        }
+
+        .required-badge {
+            color: var(--soda-pink);
+            margin-left: .15rem;
+        }
+
+        .btn-soda-primary {
+            background-color: var(--soda-blue);
+            border-color: var(--soda-blue);
+            color: #fff;
+        }
+
+        .btn-soda-primary:hover {
+            background-color: #1d447f;
+            border-color: #1d447f;
+        }
+
+        .btn-soda-outline {
+            border-color: var(--soda-blue);
+            color: var(--soda-blue);
+            background: #fff;
+        }
+
+        .btn-soda-outline:hover {
+            background-color: rgba(37,88,164,0.06);
+        }
+
+        .soda-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            padding: .2rem .7rem;
+            border-radius: 999px;
+            background: #f3f4f6;
+            font-size: .75rem;
+            color: #4b5563;
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-area {
+                padding: 1.25rem 1.25rem;
+            }
+            .step-indicators {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4 py-md-5">
+
+    <!-- topo com logo + texto -->
+    <div class="hero-area">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+            <div class="d-flex align-items-center gap-3">
+                <img src="logo-sodaperfeita.webp" class="soda-logo" alt="Soda Perfeita">
+                <div>
+                    <div class="hero-badge">
+                        <span>Plano Piloto</span>
+                        <span style="width:5px;height:5px;border-radius:999px;background:#22c55e;"></span>
+                        <span>Formulário</span>
+                    </div>
+                    <h1 class="h4 mt-2 mb-0">Avaliação para plano piloto Soda Perfeita</h1>
+                    <p class="mb-0" style="font-size:.9rem;max-width:460px;">
+                        As respostas abaixo nos ajudam a entender melhor sua operação de bebidas e
+                        desenhar um plano piloto sob medida para o seu negócio.
+                    </p>
+                </div>
+            </div>
+            <div class="text-md-end">
+                <span class="soda-chip">
+                    <span style="width:8px;height:8px;border-radius:999px;background:var(--soda-yellow);"></span>
+                    <span>Demora aproximada: 8–10 min</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="progress mt-3">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <!-- cartão principal -->
+    <div class="card form-card mb-4">
+        <div class="card-header">
+            <div class="step-indicators">
+                <div class="step-indicator active" data-step-indicator="1">
+                    <span class="step-number">1</span>
+                    <span>Negócio</span>
+                </div>
+                <div class="step-indicator" data-step-indicator="2">
+                    <span class="step-number">2</span>
+                    <span>Operação</span>
+                </div>
+                <div class="step-indicator" data-step-indicator="3">
+                    <span class="step-number">3</span>
+                    <span>Bebidas & Coquetéis</span>
+                </div>
+                <div class="step-indicator" data-step-indicator="4">
+                    <span class="step-number">4</span>
+                    <span>Equipe & Estrutura</span>
+                </div>
+                <div class="step-indicator" data-step-indicator="5">
+                    <span class="step-number">5</span>
+                    <span>Expectativas & Gelo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form id="pilot-form">
+                <!-- STEP 1 -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="h5 mb-3">1. Sobre o seu negócio</h2>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="nome_negocio">
+                            Qual o nome do seu negócio?<span class="required-badge">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="nome_negocio" name="nome_negocio" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="cidade_estado">
+                            Qual a cidade e estado do seu empreendimento?<span class="required-badge">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="cidade_estado" name="cidade_estado"
+                               placeholder="Ex.: São Paulo – SP" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Qual o tipo de negócio?<span class="required-badge">*</span>
+                        </div>
+                        <p class="question-helper mb-2">
+                            Marque as opções que melhor representam o seu estabelecimento.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_bar_baladas" name="tipo_negocio[]" value="Bar - baladas">
+                                    <label class="form-check-label" for="tipo_bar_baladas">Bar - baladas</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_bar_sinuca" name="tipo_negocio[]" value="Bar com sinuca">
+                                    <label class="form-check-label" for="tipo_bar_sinuca">Bar com sinuca</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_bar_volume" name="tipo_negocio[]" value="Bar de alto volume">
+                                    <label class="form-check-label" for="tipo_bar_volume">Bar de alto volume</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_bar_coquetelaria" name="tipo_negocio[]" value="Bar de coquetelaria">
+                                    <label class="form-check-label" for="tipo_bar_coquetelaria">Bar de coquetelaria</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_restaurante_popular" name="tipo_negocio[]" value="Restaurante popular/almoço">
+                                    <label class="form-check-label" for="tipo_restaurante_popular">Restaurante popular / almoço</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_restaurante_executivo" name="tipo_negocio[]" value="Restaurante executivo">
+                                    <label class="form-check-label" for="tipo_restaurante_executivo">Restaurante executivo</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_cafeteria" name="tipo_negocio[]" value="Cafeteria">
+                                    <label class="form-check-label" for="tipo_cafeteria">Cafeteria</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_quiosque" name="tipo_negocio[]" value="Quiosque">
+                                    <label class="form-check-label" for="tipo_quiosque">Quiosque / quiosque de praia</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_clube" name="tipo_negocio[]" value="Clube">
+                                    <label class="form-check-label" for="tipo_clube">Clube (golfe, tênis, etc.)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_hotel" name="tipo_negocio[]" value="Hotel / pousada">
+                                    <label class="form-check-label" for="tipo_hotel">Hotel / pousada</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_eventos" name="tipo_negocio[]" value="Eventos e festas">
+                                    <label class="form-check-label" for="tipo_eventos">Eventos, casas de festas, buffets</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tipo_loja_bebidas" name="tipo_negocio[]" value="Loja de bebidas">
+                                    <label class="form-check-label" for="tipo_loja_bebidas">Loja ou adega de bebidas</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center gap-2 mt-2">
+                                    <input class="form-check-input" type="checkbox" id="tipo_outro" name="tipo_negocio[]" value="Outro">
+                                    <label class="form-check-label" for="tipo_outro">Outro:</label>
+                                    <input type="text" class="form-control form-control-sm" name="tipo_negocio_outro" placeholder="Descreva">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="segmento_clientes">
+                            Segmento de clientes: quem são os principais clientes que frequentam o seu bar? Qual perfil?
+                        </label>
+                        <textarea class="form-control" id="segmento_clientes" name="segmento_clientes" rows="3"
+                                  placeholder="Ex.: jovens universitários, casais, famílias, público corporativo, turistas..."></textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="form-step" data-step="2">
+                    <h2 class="h5 mb-3">2. Operação e atendimento</h2>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="atendimento_turnos">
+                            Atendimento em quais turnos?<span class="required-badge">*</span>
+                        </label>
+                        <p class="question-helper mb-2">
+                            Exemplos: abre à tarde mas pico é à noite, finais de semana, almoço executivo, brunch, etc.
+                        </p>
+                        <textarea class="form-control" id="atendimento_turnos" name="atendimento_turnos" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="principal_diferencial">
+                            O que considera ser o principal diferencial do seu estabelecimento?
+                        </label>
+                        <textarea class="form-control" id="principal_diferencial" name="principal_diferencial" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="experiencia_bebidas">
+                            Descreva, em linhas gerais, como é hoje a experiência de bebidas no seu negócio.
+                        </label>
+                        <p class="question-helper mb-2">
+                            Padrão de serviço, apresentação dos drinks, tempo de espera, sugestões do time de bar, etc.
+                        </p>
+                        <textarea class="form-control" id="experiencia_bebidas" name="experiencia_bebidas" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Trabalha com delivery atualmente?<span class="required-badge">*</span>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="delivery" id="delivery_sim_coquetel" value="Sim, inclusive coquetéis" required>
+                            <label class="form-check-label" for="delivery_sim_coquetel">
+                                Sim, inclusive coquetéis / bebidas especiais
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="delivery" id="delivery_sim_somente_comida" value="Sim, mas somente comida ou outros produtos">
+                            <label class="form-check-label" for="delivery_sim_somente_comida">
+                                Sim, mas somente comida ou outros produtos
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="delivery" id="delivery_nao" value="Não trabalha com delivery">
+                            <label class="form-check-label" for="delivery_nao">
+                                Não trabalha com delivery
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="form-step" data-step="3">
+                    <h2 class="h5 mb-3">3. Mix de bebidas e coquetéis</h2>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="bebidas_mais_vendidas">
+                            Quais são as bebidas mais vendidas em sua operação?
+                        </label>
+                        <p class="question-helper mb-2">
+                            Liste, se possível, até 10 itens (cerveja, chope, caipirinhas, drinks autorais,
+                            long drinks, shots, refrigerantes, água, etc).
+                        </p>
+                        <textarea class="form-control" id="bebidas_mais_vendidas" name="bebidas_mais_vendidas" rows="4"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Quais tipos de coquetéis quer oferecer ou fortalecer na operação?
+                        </div>
+                        <p class="question-helper mb-2">
+                            Marque tudo o que fizer sentido hoje ou como objetivo.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_classicos_iba" name="coqueteis[]" value="Clássicos IBA">
+                                    <label class="form-check-label" for="coquetel_classicos_iba">Clássicos IBA</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_autorais" name="coqueteis[]" value="Autorais da casa">
+                                    <label class="form-check-label" for="coquetel_autorais">Drinks autorais da casa</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_sem_alcool" name="coqueteis[]" value="Sem álcool / mocktails">
+                                    <label class="form-check-label" for="coquetel_sem_alcool">Mocktails / sem álcool</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_shots" name="coqueteis[]" value="Shots e rituais">
+                                    <label class="form-check-label" for="coquetel_shots">Shots e rituais</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_highball" name="coqueteis[]" value="Highballs / bebidas gaseificadas">
+                                    <label class="form-check-label" for="coquetel_highball">Highballs / bebidas gaseificadas</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center gap-2 mt-2">
+                                    <input class="form-check-input" type="checkbox" id="coquetel_outros" name="coqueteis[]" value="Outros">
+                                    <label class="form-check-label" for="coquetel_outros">Outros:</label>
+                                    <input type="text" class="form-control form-control-sm" name="coqueteis_outros" placeholder="Descreva">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="ticket_medio_drinks">
+                            Qual o ticket médio aproximado dos drinks/coquetéis hoje?
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            <input type="number" class="form-control" id="ticket_medio_drinks" name="ticket_medio_drinks" min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="form-step" data-step="4">
+                    <h2 class="h5 mb-3">4. Mão de obra e estrutura de bar</h2>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Mão de obra: como você classifica o time de bar hoje?<span class="required-badge">*</span>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="mao_obra" id="mao_obra_fraca" value="Necessita bastante treinamento" required>
+                            <label class="form-check-label" for="mao_obra_fraca">
+                                Time ainda fraco, necessita bastante treinamento e suporte.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="mao_obra" id="mao_obra_media" value="Boa, mas falta padrão">
+                            <label class="form-check-label" for="mao_obra_media">
+                                Boa, mas falta padronização e consistência nos drinks.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="mao_obra" id="mao_obra_excellente" value="Excelente e padronizada">
+                            <label class="form-check-label" for="mao_obra_excellente">
+                                Excelente e padronizada – foco maior em novos produtos.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="mao_obra_comentarios">
+                            Se quiser, descreva como imagina que a Soda Perfeita pode ajudar na capacitação/rotina do bar.
+                        </label>
+                        <textarea class="form-control" id="mao_obra_comentarios" name="mao_obra_comentarios" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Compra de gelo e limite operacional de estocagem
+                        </div>
+                        <div class="question-helper mb-2">
+                            Escolha a opção que melhor representa sua realidade atual.
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_pequeno" value="Somente gelo sacado, pouco espaço em estoque">
+                            <label class="form-check-label" for="gelo_sacado_pequeno">
+                                Uso apenas gelo sacado, com pouco espaço de armazenamento.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_grande" value="Consumo alto de gelo sacado">
+                            <label class="form-check-label" for="gelo_sacado_grande">
+                                Consumo alto de gelo sacado (custo relevante na operação).
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_maquina" value="Possui máquina de gelo própria">
+                            <label class="form-check-label" for="gelo_maquina">
+                                Possui máquina de gelo própria.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Existe alguma frequência / evento que queira aprimorar com o plano piloto?
+                        </div>
+                        <p class="question-helper mb-2">
+                            Marque o que fizer sentido (opcional).
+                        </p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="freq_luau" name="frequencia_eventos[]" value="Eventos temáticos (luau, noites especiais, etc.)">
+                            <label class="form-check-label" for="freq_luau">
+                                Eventos temáticos (luau, noites especiais, harmonizações, etc.)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="freq_corporativo" name="frequencia_eventos[]" value="Atendimento a eventos corporativos">
+                            <label class="form-check-label" for="freq_corporativo">
+                                Eventos e reservas corporativas
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="freq_happyhour" name="frequencia_eventos[]" value="Happy hour">
+                            <label class="form-check-label" for="freq_happyhour">
+                                Happy hour / pós-expediente
+                            </label>
+                        </div>
+                        <div class="form-check d-flex align-items-center gap-2 mt-2">
+                            <input class="form-check-input" type="checkbox" id="freq_outros" name="frequencia_eventos[]" value="Outros">
+                            <label class="form-check-label" for="freq_outros">Outros:</label>
+                            <input type="text" class="form-control form-control-sm" name="frequencia_eventos_outros" placeholder="Descreva">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5 -->
+                <div class="form-step" data-step="5">
+                    <h2 class="h5 mb-3">5. Expectativas com a Soda Perfeita e consumo de gelo</h2>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="expectativas">
+                            Quais são suas expectativas com a contratação do sistema Soda Perfeita?
+                        </label>
+                        <p class="question-helper mb-2">
+                            Como acredita que podemos agregar valor à sua operação? O que seria sucesso para você nesse projeto?
+                        </p>
+                        <textarea class="form-control" id="expectativas" name="expectativas" rows="4"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="satisfacao_geral">
+                            Em uma escala de 1 a 5, qual o nível de satisfação atual com a operação de bebidas?
+                        </label>
+                        <select class="form-select" id="satisfacao_geral" name="satisfacao_geral">
+                            <option value="">Selecione...</option>
+                            <option value="1">1 - Muito insatisfeito(a)</option>
+                            <option value="2">2 - Insatisfeito(a)</option>
+                            <option value="3">3 - Neutro(a)</option>
+                            <option value="4">4 - Satisfeito(a)</option>
+                            <option value="5">5 - Muito satisfeito(a)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="question-title">
+                            Atualmente possui máquina de gelo? Se sim, está satisfeito?
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="maquina_gelo" id="maquina_gelo_sim_satisfeito" value="Sim, satisfeito(a)">
+                            <label class="form-check-label" for="maquina_gelo_sim_satisfeito">
+                                Sim, e estou satisfeito(a) com a capacidade/resultado.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="maquina_gelo" id="maquina_gelo_sim_insatisfeito" value="Sim, mas não supre bem a demanda">
+                            <label class="form-check-label" for="maquina_gelo_sim_insatisfeito">
+                                Sim, mas não supre bem a demanda.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="maquina_gelo" id="maquina_gelo_nao" value="Não possuo máquina de gelo">
+                            <label class="form-check-label" for="maquina_gelo_nao">
+                                Não possuo máquina de gelo.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="consumo_semanal_gelo">
+                            Se não, qual o consumo semanal de gelo aproximado?
+                        </label>
+                        <input type="text" class="form-control" id="consumo_semanal_gelo" name="consumo_semanal_gelo"
+                               placeholder="Ex.: 40 sacos de 10kg por semana">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="valor_gasto_gelo">
+                            E qual o valor aproximado gasto com gelo por semana ou mês?
+                        </label>
+                        <input type="text" class="form-control" id="valor_gasto_gelo" name="valor_gasto_gelo"
+                               placeholder="Ex.: R$ 2.500/mês">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="question-title" for="observacoes_finais">
+                            Observações finais que considere importantes:
+                        </label>
+                        <textarea class="form-control" id="observacoes_finais" name="observacoes_finais" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- navegação -->
+                <div class="d-flex justify-content-between pt-3 border-top mt-3">
+                    <button type="button" class="btn btn-soda-outline" id="prev-btn" disabled>Voltar</button>
+                    <button type="button" class="btn btn-soda-primary" id="next-btn">
+                        Próximo
+                    </button>
+                    <button type="submit" class="btn btn-soda-primary d-none" id="submit-btn">
+                        Enviar formulário
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function () {
+        const form = document.getElementById('pilot-form');
+        const steps = Array.from(document.querySelectorAll('.form-step'));
+        const indicators = Array.from(document.querySelectorAll('.step-indicator'));
+        const progressBar = document.querySelector('.progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+
+        let currentStep = 0;
+
+        function updateUI() {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', index === currentStep);
+            });
+
+            indicators.forEach((ind, index) => {
+                ind.classList.remove('active', 'done');
+                if (index < currentStep) {
+                    ind.classList.add('done');
+                } else if (index === currentStep) {
+                    ind.classList.add('active');
+                }
+            });
+
+            const progress = ((currentStep) / (steps.length - 1)) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.setAttribute('aria-valuenow', progress.toString());
+
+            prevBtn.disabled = currentStep === 0;
+
+            if (currentStep === steps.length - 1) {
+                nextBtn.classList.add('d-none');
+                submitBtn.classList.remove('d-none');
+            } else {
+                nextBtn.classList.remove('d-none');
+                submitBtn.classList.add('d-none');
+            }
+        }
+
+        function validateCurrentStep() {
+            const currentFields = steps[currentStep].querySelectorAll('input, select, textarea');
+            for (const field of currentFields) {
+                if (!field.checkValidity()) {
+                    field.reportValidity();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (!validateCurrentStep()) return;
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateUI();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateUI();
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+            if (!validateCurrentStep()) {
+                e.preventDefault();
+            } else {
+                // aqui depois você liga com o processamento (WordPress, PHP, etc.)
+                // por enquanto deixa submit normal.
+            }
+        });
+
+        updateUI();
+    })();
+</script>
+
+</body>
+</html>
