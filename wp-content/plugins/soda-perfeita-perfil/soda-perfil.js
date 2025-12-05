@@ -44,6 +44,23 @@
 
     const tableEl = $('#soda-perfil-table');
     if (tableEl.length) {
+      const fmt = function(val) {
+        if (Array.isArray(val)) {
+          return val.join(', ');
+        }
+        if (typeof val === 'string' && val.startsWith('[')) {
+          try {
+            const parsed = JSON.parse(val);
+            if (Array.isArray(parsed)) return parsed.join(', ');
+          } catch (e) {
+            return val;
+          }
+        }
+        return val || '';
+      };
+
+      let currentProfile = null;
+
       const dt = tableEl.DataTable({
         autoWidth: false,
         responsive: true,
@@ -58,9 +75,24 @@
           { data: 'created_at' },
           { data: 'nome_negocio' },
           { data: 'cidade_estado' },
+          { data: 'tipo_negocio' },
+          { data: 'segmento_clientes' },
+          { data: 'atendimento_turnos' },
+          { data: 'principal_diferencial' },
+          { data: 'experiencia_bebidas' },
           { data: 'delivery' },
+          { data: 'coqueteis' },
+          { data: 'ticket_medio_drinks' },
           { data: 'mao_obra' },
+          { data: 'mao_obra_comentarios' },
+          { data: 'gelo_operacao' },
+          { data: 'frequencia_eventos' },
+          { data: 'expectativas' },
           { data: 'satisfacao_geral' },
+          { data: 'maquina_gelo' },
+          { data: 'consumo_semanal_gelo' },
+          { data: 'valor_gasto_gelo' },
+          { data: 'observacoes_finais' },
           {
             data: null,
             orderable: false,
@@ -85,26 +117,36 @@
       const btnPrint = $('#btnPrintPerfil');
       const editIdInput = $('#perfilEditId');
 
-      function renderView(data){
+            function renderView(data){
         const fields = [
-          ['ID', data.id],
-          ['Criado em', data.created_at],
-          ['Nome do negócio', data.nome_negocio],
-          ['Cidade/Estado', data.cidade_estado],
-          ['Delivery', data.delivery],
-          ['Atendimento / turnos', data.atendimento_turnos],
-          ['Mão de obra', data.mao_obra],
-          ['Satisfação', data.satisfacao_geral],
-          ['Expectativas', data.expectativas],
-          ['Consumo semanal de gelo', data.consumo_semanal_gelo],
-          ['Valor gasto com gelo', data.valor_gasto_gelo],
-          ['Observações', data.observacoes_finais]
+          ["ID", fmt(data.id)],
+          ["Criado em", fmt(data.created_at)],
+          ["Nome do negocio", fmt(data.nome_negocio)],
+          ["Cidade/Estado", fmt(data.cidade_estado)],
+          ["Tipo de negocio", fmt(data.tipo_negocio)],
+          ["Segmento clientes", fmt(data.segmento_clientes)],
+          ["Atendimento / turnos", fmt(data.atendimento_turnos)],
+          ["Principal diferencial", fmt(data.principal_diferencial)],
+          ["Experiencia bebidas", fmt(data.experiencia_bebidas)],
+          ["Delivery", fmt(data.delivery)],
+          ["Coqueteis", fmt(data.coqueteis)],
+          ["Ticket medio drinks", fmt(data.ticket_medio_drinks)],
+          ["Mao de obra", fmt(data.mao_obra)],
+          ["Comentarios mao de obra", fmt(data.mao_obra_comentarios)],
+          ["Gelo operacao", fmt(data.gelo_operacao)],
+          ["Frequencia eventos", fmt(data.frequencia_eventos)],
+          ["Expectativas", fmt(data.expectativas)],
+          ["Satisfacao", fmt(data.satisfacao_geral)],
+          ["Maquina de gelo", fmt(data.maquina_gelo)],
+          ["Consumo semanal de gelo", fmt(data.consumo_semanal_gelo)],
+          ["Valor gasto com gelo", fmt(data.valor_gasto_gelo)],
+          ["Observacoes", fmt(data.observacoes_finais)]
         ];
         const html = fields.map(function(item){
           return '<dt class="col-sm-4">'+item[0]+'</dt><dd class="col-sm-8">'+(item[1] || '-')+'</dd>';
         }).join('');
         viewContent.html(html);
-        $('#perfilModalLabel').text('Perfil #' + data.id + ' - ' + (data.nome_negocio || ''));
+        $("#perfilModalLabel").text('Perfil #' + data.id + ' - ' + (data.nome_negocio || ''));
       }
 
       function fillEditForm(data){
@@ -141,8 +183,9 @@
             alert(res.data ? res.data.message : 'Erro ao carregar.');
             return;
           }
-          renderView(res.data);
-          fillEditForm(res.data);
+          currentProfile = res.data;
+          renderView(currentProfile);
+          fillEditForm(currentProfile);
           toggleEdit(toEdit);
           if (perfilModal) perfilModal.show();
         }).fail(function(){
@@ -197,6 +240,21 @@
           observacoes_finais: $('#edit_observacoes_finais').val()
         };
 
+        if (currentProfile) {
+          $.extend(dados, {
+            tipo_negocio: currentProfile.tipo_negocio || [],
+            segmento_clientes: currentProfile.segmento_clientes || '',
+            principal_diferencial: currentProfile.principal_diferencial || '',
+            experiencia_bebidas: currentProfile.experiencia_bebidas || '',
+            coqueteis: currentProfile.coqueteis || [],
+            ticket_medio_drinks: currentProfile.ticket_medio_drinks || '',
+            mao_obra_comentarios: currentProfile.mao_obra_comentarios || '',
+            gelo_operacao: currentProfile.gelo_operacao || '',
+            frequencia_eventos: currentProfile.frequencia_eventos || [],
+            maquina_gelo: currentProfile.maquina_gelo || ''
+          });
+        }
+
         $.post(SodaPerfil.ajaxUrl, {
           action: 'soda_perfeita_perfil_update',
           nonce: SodaPerfil.nonce,
@@ -218,3 +276,4 @@
     }
   });
 })(jQuery);
+

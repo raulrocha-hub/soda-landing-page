@@ -205,7 +205,33 @@ class Soda_Perfeita_Perfil {
         check_ajax_referer('soda_perfil_nonce', 'nonce');
 
         global $wpdb;
-        $rows = $wpdb->get_results("SELECT id, created_at, nome_negocio, cidade_estado, delivery, mao_obra, satisfacao_geral FROM {$this->table} ORDER BY created_at DESC");
+        $rows = $wpdb->get_results("
+            SELECT 
+                id,
+                created_at,
+                nome_negocio,
+                cidade_estado,
+                tipo_negocio,
+                segmento_clientes,
+                atendimento_turnos,
+                principal_diferencial,
+                experiencia_bebidas,
+                delivery,
+                coqueteis,
+                ticket_medio_drinks,
+                mao_obra,
+                mao_obra_comentarios,
+                gelo_operacao,
+                frequencia_eventos,
+                expectativas,
+                satisfacao_geral,
+                maquina_gelo,
+                consumo_semanal_gelo,
+                valor_gasto_gelo,
+                observacoes_finais
+            FROM {$this->table}
+            ORDER BY created_at DESC
+        ");
 
         wp_send_json_success($rows);
     }
@@ -490,6 +516,34 @@ class Soda_Perfeita_Perfil {
                 flex-wrap: wrap;
             }
         }
+
+        /* Reset total dos checkboxes/radios na página Soda Perfeita */
+.soda-form input[type="checkbox"],
+.soda-form input[type="radio"] {
+    margin: 0 6px 0 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    position: relative;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* Força alinhamento horizontal e vertical */
+.soda-form label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px;
+    margin: 4px 0 !important;
+}
+
+/* Remove qualquer indentação herdada */
+.soda-form .form-check,
+.soda-form .checkbox-group,
+.soda-form .radio-group {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
     </style>      
 
 <div class="container py-4 py-md-5">
@@ -553,7 +607,7 @@ class Soda_Perfeita_Perfil {
         </div>
 
         <div class="card-body">
-            <form id="pilot-form" class="needs-validation" novalidate>
+            <form id="pilot-form" class="needs-validation soda-form" novalidate>
                 <input type="hidden" name="action" value="soda_perfeita_perfil_submit">
                 <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('soda_perfil_nonce')); ?>">
                 
@@ -777,7 +831,7 @@ class Soda_Perfeita_Perfil {
 
                 <!-- STEP 4 -->
                 <div class="form-step" data-step="4">
-                    <h2 class="h5 Mao de obra e estrutura de bar</h2>
+                    <h2 class="h5"> Mao de obra e estrutura de bar</h2>
 
                     <div class="mb-3">
                         <div class="question-title">
@@ -810,32 +864,7 @@ class Soda_Perfeita_Perfil {
                         <textarea class="form-control" id="mao_obra_comentarios" name="mao_obra_comentarios" rows="3"></textarea>
                     </div>
 
-                    <div class="mb-3">
-                        <div class="question-title">
-                            Compra de gelo e limite operacional de estocagem
-                        </div>
-                        <div class="question-helper mb-2">
-                            Escolha a opção que melhor representa sua realidade atual.
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_pequeno" value="Somente gelo sacado, pouco espaço em estoque">
-                            <label class="form-check-label" for="gelo_sacado_pequeno">
-                                Uso apenas gelo sacado, com pouco espaço de armazenamento.
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_grande" value="Consumo alto de gelo sacado">
-                            <label class="form-check-label" for="gelo_sacado_grande">
-                                Consumo alto de gelo sacado (custo relevante na operação).
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_maquina" value="Possui máquina de gelo própria">
-                            <label class="form-check-label" for="gelo_maquina">
-                                Possui máquina de gelo própria.
-                            </label>
-                        </div>
-                    </div>
+                    
 
                     <div class="mb-3">
                         <div class="question-title">
@@ -937,7 +966,32 @@ class Soda_Perfeita_Perfil {
                         <input type="text" class="form-control" id="valor_gasto_gelo" name="valor_gasto_gelo"
                                placeholder="Ex.: R$ 2.500/mês">
                     </div>
-
+<div class="mb-3">
+                        <div class="question-title">
+                            Compra de gelo e limite operacional de estocagem
+                        </div>
+                        <div class="question-helper mb-2">
+                            Escolha a opção que melhor representa sua realidade atual.
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_pequeno" value="Somente gelo sacado, pouco espaço em estoque">
+                            <label class="form-check-label" for="gelo_sacado_pequeno">
+                                Uso apenas gelo sacado, com pouco espaço de armazenamento.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_sacado_grande" value="Consumo alto de gelo sacado">
+                            <label class="form-check-label" for="gelo_sacado_grande">
+                                Consumo alto de gelo sacado (custo relevante na operação).
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gelo_operacao" id="gelo_maquina" value="Possui máquina de gelo própria">
+                            <label class="form-check-label" for="gelo_maquina">
+                                Possui máquina de gelo própria.
+                            </label>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label class="question-title" for="observacoes_finais">
                             Observacoes finais que considere importantes:
@@ -1074,9 +1128,24 @@ class Soda_Perfeita_Perfil {
                             <th>Data</th>
                             <th>Negocio</th>
                             <th>Cidade/Estado</th>
+                            <th>Tipo de negocio</th>
+                            <th>Segmento clientes</th>
+                            <th>Atendimento/Turnos</th>
+                            <th>Principal diferencial</th>
+                            <th>Experiencia bebidas</th>
                             <th>Delivery</th>
+                            <th>Coqueteis</th>
+                            <th>Ticket medio drinks</th>
                             <th>Mao de obra</th>
+                            <th>Comentarios mao de obra</th>
+                            <th>Gelo operacao</th>
+                            <th>Frequencia eventos</th>
+                            <th>Expectativas</th>
                             <th>Satisfacao</th>
+                            <th>Maquina gelo</th>
+                            <th>Consumo semanal gelo</th>
+                            <th>Valor gasto gelo</th>
+                            <th>Observacoes finais</th>
                             <th>Acoes</th>
                         </tr>
                         </thead>

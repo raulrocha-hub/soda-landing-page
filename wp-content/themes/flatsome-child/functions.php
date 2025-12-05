@@ -797,3 +797,20 @@ function meu_logotipo_login_personalizado() {
     <?php
 }
 add_action('login_enqueue_scripts', 'meu_logotipo_login_personalizado');
+
+add_action( 'wp_enqueue_scripts', 'soda_enqueue_checkout_label_script', 30 );
+function soda_enqueue_checkout_label_script() {
+    // só carrega no carrinho/checkout se quiser otimizar
+    if ( ! is_checkout() ) {
+        return;
+    }
+
+    
+    
+    wp_enqueue_style(
+        'soda-checkout-css', // handle
+        get_stylesheet_directory_uri() . '/css/soda-checkout.css',
+        array(),            
+        '1.1.0'             
+    );
+}
