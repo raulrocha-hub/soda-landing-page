@@ -1,0 +1,35 @@
+#soda-cashback-modal {
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+}
+
+.soda-cashback-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.soda-cashback-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    max-width: 900px;
+    max-height: 80%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    overflow: auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.soda-cashback-modal-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+}
